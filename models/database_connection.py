@@ -1,3 +1,4 @@
+from loguru import logger
 from sqlalchemy import NullPool, AsyncAdaptedQueuePool
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlmodel import SQLModel
@@ -41,6 +42,6 @@ async def init_db():
                 hashed_password=get_password_hash(config.admin_password),
                 is_admin=True
             ).save(session=session)
-            print("管理员用户创建成功")
+            logger.info("管理员用户创建成功")
         else:
-            print("管理员用户已存在")
+            logger.info("管理员用户已存在")
