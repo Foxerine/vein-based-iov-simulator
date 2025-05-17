@@ -1,4 +1,9 @@
+import asyncio
 import os as sync_os
+import tempfile
+import zipfile
+from typing import Tuple
+
 from aiofiles import os
 from pathlib import Path
 from fastapi import HTTPException, status
@@ -87,3 +92,43 @@ async def ensure_file_path_valid(base_dir: str, relative_path: str, allow_protec
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"路径验证出错: {str(e)}"
         )
+
+async def create_zip_archive(directory_path: str, excludes: list[str] = None) -> Tuple[str, str]:
+    """
+    异步创建目录内容的zip压缩包
+
+    参数:
+        directory_path: 要压缩的目录路径
+        excludes: 要排除的文件或目录名列表
+
+    返回:
+        Tuple[str, str]: (临时zip文件路径, 文件名)
+    """
+    if excludes is None:
+        excludes = []
+
+    # 创建一个临时文件
+    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.zip')
+    temp_file.close()
+
+    # 获取基础目录名作为zip文件名
+    base_dir_name = sync_os.path.basename(sync_os.path.normpath(directory_path))
+    zip_filename = f"{base_dir_name}.zip"
+
+    def _sync_create_zip():
+        with zipfile.ZipFile(temp_file.name, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            for root, _, files in sync_os.walk(directory_path):
+                # 检查是否在排除列表中
+                if any(exclude in root for exclude in excludes):
+                    continue
+
+                for file in files:
+                    file_path = sync_os.path.join(root, file)
+                    # 计算相对于原始目录的路径
+                    arcname = sync_os.path.relpath(file_path, directory_path)
+                    zipf.write(file_path, arcname)
+
+    # 在线程池中执行同步zip操作
+    await asyncio.to_thread(_sync_create_zip)
+
+    return temp_file.name, zip_filename

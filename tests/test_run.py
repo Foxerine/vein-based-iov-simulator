@@ -6,6 +6,8 @@ import pytest
 
 from config import config
 from models.run import Run, RunStatus
+from utils.depends import SessionDep
+
 
 @pytest.fixture(scope="function")
 def setup_run_dirs():
@@ -305,3 +307,93 @@ async def test_error_handling(client, normal_user_token, setup_run_dirs):
     # 未认证访问
     unauthorized_response = client.get("/api/run/1")
     assert unauthorized_response.status_code == 401
+
+@pytest.mark.asyncio
+@patch('utils.files.create_zip_archive')
+async def test_download_run_results_zip(mock_create_zip, client, session, normal_user_token, setup_run_dirs):
+    """测试下载运行结果ZIP包"""
+    # 设置mock
+    import tempfile
+    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.zip')
+    temp_file.write(b'fake run zip content')
+    temp_file.close()
+    mock_create_zip.return_value = (temp_file.name, "run.zip")
+
+    # 创建项目
+    project_response = client.post(
+        "/api/project?name=ZIP下载测试&veins_config_name=TestConfig",
+        files=[('files', ('test.txt', BytesIO(b'test content'), 'text/plain'))],
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+    project_id = project_response.json()["id"]
+
+    # 创建运行
+    run_response = client.post(
+        "/api/run",
+        json={"project_id": project_id, "notes": "ZIP测试运行"},
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+    run_id = run_response.json()["id"]
+
+    # 下载运行结果ZIP
+    download_response = client.get(
+        f"/api/run/{run_id}/files",
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+
+    # 验证响应
+    assert "filename*=utf-8''" in download_response.headers["content-disposition"]
+    assert ".zip" in download_response.headers["content-disposition"]
+    assert "attachment;" in download_response.headers["content-disposition"]
+
+    # 清理
+    import os
+    os.unlink(temp_file.name)
+
+@pytest.mark.asyncio
+@patch('utils.files.create_zip_archive')
+async def test_download_nonexistent_run_results_zip(mock_create_zip, client, normal_user_token):
+    """测试下载不存在的运行结果ZIP"""
+    # 尝试下载不存在的运行结果ZIP
+    download_response = client.get(
+        "/api/run/99999/files",
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+
+    # 验证响应
+    assert download_response.status_code == 404
+
+    # 确保mock没有被调用
+    mock_create_zip.assert_not_called()
+
+@pytest.mark.asyncio
+@patch('utils.files.create_zip_archive')
+async def test_unauthorized_run_results_zip_download(
+        mock_create_zip, client, normal_user_token, admin_user_token, setup_run_dirs
+):
+    """测试未授权下载运行结果ZIP"""
+    # 管理员创建项目
+    admin_project = client.post(
+        "/api/project?name=管理员ZIP项目&veins_config_name=AdminConfig",
+        files=[('files', ('admin.txt', BytesIO(b'admin content'), 'text/plain'))],
+        headers={"Authorization": f"Bearer {admin_user_token}"}
+    ).json()
+
+    # 管理员创建运行
+    admin_run = client.post(
+        "/api/run",
+        json={"project_id": admin_project["id"], "notes": "管理员运行"},
+        headers={"Authorization": f"Bearer {admin_user_token}"}
+    ).json()
+
+    # 普通用户尝试下载管理员运行结果ZIP
+    download_response = client.get(
+        f"/api/run/{admin_run['id']}/files",
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+
+    # 验证响应 (应该是404，因为获取Run时已经检查了权限)
+    assert download_response.status_code == 404
+
+    # 确保mock没有被调用
+    mock_create_zip.assert_not_called()

@@ -1,6 +1,7 @@
 import os
 import shutil
 from io import BytesIO
+from unittest.mock import patch
 
 import pytest
 
@@ -187,3 +188,112 @@ async def test_authentication_required(client):
             response = client.delete(endpoint)
 
         assert response.status_code in (401, 403), f"{method} {endpoint} 应该要求认证"
+
+@pytest.mark.asyncio
+async def test_download_project_file(client, normal_user_token, test_file, setup_project_dir):
+    """测试下载项目文件"""
+    # 创建项目和文件
+    response = client.post(
+        "/api/project?name=文件下载测试项目&description=测试描述&veins_config_name=Default",
+        files=[test_file],
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+    assert response.status_code == 200
+    project_id = response.json()["id"]
+
+    # 下载文件
+    download_response = client.get(
+        f"/api/project/{project_id}/files/test_file.txt",
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+
+    # 验证响应
+    assert download_response.status_code == 200
+    assert download_response.content == b"test_file_content"
+    assert "attachment" in download_response.headers["content-disposition"]
+    assert "test_file.txt" in download_response.headers["content-disposition"]
+
+@pytest.mark.asyncio
+async def test_download_nonexistent_project_file(client, normal_user_token, test_file, setup_project_dir):
+    """测试下载不存在的项目文件"""
+    # 创建项目和文件
+    response = client.post(
+        "/api/project?name=不存在文件测试&description=测试描述&veins_config_name=Default",
+        files=[test_file],
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+    assert response.status_code == 200
+    project_id = response.json()["id"]
+
+    # 下载不存在的文件
+    download_response = client.get(
+        f"/api/project/{project_id}/files/nonexistent.txt",
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+
+    # 验证响应
+    assert download_response.status_code == 404
+
+@pytest.mark.asyncio
+@patch('utils.files.create_zip_archive')
+async def test_download_project_zip(mock_create_zip, client, normal_user_token, test_file, setup_project_dir):
+    """测试下载项目ZIP包"""
+    # 设置mock
+    import tempfile
+    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.zip')
+    temp_file.write(b'fake zip content')
+    temp_file.close()
+    mock_create_zip.return_value = (temp_file.name, "project.zip")
+
+    # 创建项目和文件
+    response = client.post(
+        "/api/project?name=ZIP下载测试&description=测试描述&veins_config_name=Default",
+        files=[test_file],
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+    assert response.status_code == 200
+    project_id = response.json()["id"]
+
+    # 下载项目ZIP
+    download_response = client.get(
+        f"/api/project/{project_id}/files",
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+
+    # 验证响应
+    assert download_response.status_code == 200
+    assert "attachment" in download_response.headers["content-disposition"]
+    assert download_response.headers["content-type"] == "application/zip"
+
+    # 清理
+    import os
+    os.unlink(temp_file.name)
+
+@pytest.mark.asyncio
+async def test_unauthorized_project_file_download(client, normal_user_token, admin_user_token, test_file, setup_project_dir):
+    """测试未授权下载项目文件"""
+    # 管理员创建项目
+    admin_response = client.post(
+        "/api/project?name=管理员项目&description=测试描述&veins_config_name=Default",
+        files=[('files', ('admin.txt', BytesIO(b'admin content'), 'text/plain'))],
+        headers={"Authorization": f"Bearer {admin_user_token}"}
+    )
+    admin_project_id = admin_response.json()["id"]
+
+    # 普通用户尝试下载管理员项目的文件
+    download_response = client.get(
+        f"/api/project/{admin_project_id}/files/admin.txt",
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+
+    # 验证响应 (应该是404，因为获取项目时已经检查了权限)
+    assert download_response.status_code == 404
+
+    # 普通用户尝试下载管理员项目的ZIP
+    zip_response = client.get(
+        f"/api/project/{admin_project_id}/files",
+        headers={"Authorization": f"Bearer {normal_user_token}"}
+    )
+
+    # 验证响应
+    assert zip_response.status_code == 404
