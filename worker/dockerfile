@@ -49,6 +49,11 @@ RUN /bin/bash -c ". /root/.nix-profile/etc/profile.d/nix.sh && \
                   opp_env init && \
                   opp_env install veins-5.3"
 
+# 预设绝对路径变量到环境中，便于entrypoint.sh使用
+ENV VEINS_BIN="/opp_env_inst/veins-5.3/bin"
+ENV OMNETPP_BIN="/opp_env_inst/omnetpp-6.1.0/bin"
+ENV INET_SRC="/opp_env_inst/inet-4.5.4/src"
+
 # 创建用于挂载用户项目和结果的目录
 RUN mkdir -p /simulation/project /simulation/results
 
