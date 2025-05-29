@@ -17,7 +17,7 @@ class TableViewRequest(SQLModel):
         self._clause = None
 
     def clause(self, cls: Type[T]) -> ClauseElement:
-        if not self._clause:
+        if self._clause is None:
             if self.order == "created_at":
                 if self.desc:
                     self._clause = desc(cls.created_at)

@@ -1,10 +1,10 @@
 # 使用 Debian 12 作为基础镜像
 FROM debian:12-slim
 
-# 设置非交互式安装，避免apt安装时提问
+# 设置非交互式安装
 ARG DEBIAN_FRONTEND=noninteractive
 
-# 安装基础依赖、Python、SUMO、编译工具和 Nix 安装所需的工具
+# 安装基础依赖、Python、SUMO、编译工具、最小GUI组件、Nginx和 Nix
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     build-essential \
@@ -17,7 +17,27 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     sumo \
     sumo-tools \
     procps \
-    # 清理 apt 缓存
+    # 最小GUI支持组件
+    xvfb \
+    x11vnc \
+    websockify \
+    novnc \
+    # Nginx (轻量级)
+    nginx-light \
+    # Qt依赖
+    libqt5gui5 \
+    libqt5widgets5 \
+    libqt5core5a \
+    libqt5opengl5 \
+    # X11基础库
+    libx11-6 \
+    libxext6 \
+    libxrender1 \
+    libxtst6 \
+    libxi6 \
+    # 基础字体
+    fonts-dejavu-core \
+    # 清理缓存
     && rm -rf /var/lib/apt/lists/*
 
 # 安装 Nix (单用户模式)
@@ -26,7 +46,7 @@ RUN mkdir -p /etc/nix && \
 
 RUN curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
 
-# 设置 Nix 环境 (在后续 RUN/ENTRYPOINT 中通过 source 加载)
+# 设置 Nix 环境
 ENV PATH /root/.nix-profile/bin:$PATH
 ENV NIX_PATH "nixpkgs=/root/.nix-defexpr/channels/nixpkgs"
 ENV NIX_SSL_CERT_FILE /etc/ssl/certs/ca-certificates.crt
@@ -34,7 +54,7 @@ ENV NIX_SSL_CERT_FILE /etc/ssl/certs/ca-certificates.crt
 # 创建 Python 虚拟环境
 RUN python3 -m venv /opt/venv
 
-# 激活 venv 并安装 opp_env (确保 Nix 环境被加载)
+# 激活 venv 并安装 opp_env
 RUN /bin/bash -c ". /root/.nix-profile/etc/profile.d/nix.sh && \
                   . /opt/venv/bin/activate && \
                   pip install --no-cache-dir opp_env"
@@ -43,29 +63,39 @@ RUN /bin/bash -c ". /root/.nix-profile/etc/profile.d/nix.sh && \
 RUN mkdir /opp_env_inst
 WORKDIR /opp_env_inst
 
-# 初始化 opp_env 并安装 Veins 5.3 (及其依赖 OMNeT++, INET)
+# 初始化 opp_env 并安装 Veins 5.3
 RUN /bin/bash -c ". /root/.nix-profile/etc/profile.d/nix.sh && \
                   . /opt/venv/bin/activate && \
                   opp_env init && \
                   opp_env install veins-5.3"
 
-# 预设绝对路径变量到环境中，便于entrypoint.sh使用
+# 环境变量
 ENV VEINS_BIN="/opp_env_inst/veins-5.3/bin"
 ENV OMNETPP_BIN="/opp_env_inst/omnetpp-6.1.0/bin"
 ENV INET_SRC="/opp_env_inst/inet-4.5.4/src"
 
-# 创建用于挂载用户项目和结果的目录
-RUN mkdir -p /simulation/project /simulation/results
+# GUI相关环境变量
+ENV DISPLAY=:99
+ENV SCREEN_WIDTH=1440
+ENV SCREEN_HEIGHT=900
+ENV SCREEN_DEPTH=24
 
-# 设置默认工作目录为用户项目目录
+# 创建挂载目录和配置目录
+RUN mkdir -p /simulation/project /simulation/results /etc/nginx/sites-enabled
+
+# 清理默认nginx配置
+RUN rm -f /etc/nginx/sites-enabled/default
+
+# 设置工作目录
 WORKDIR /simulation/project
 
-# 复制入口点脚本到镜像中
+# 复制入口脚本
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# 定义容器启动时执行的入口点
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+# 暴露端口 (只暴露nginx端口)
+EXPOSE 8080
 
-# 定义默认传递给入口点脚本的命令 (显示帮助)
+# 入口点
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["--help"]

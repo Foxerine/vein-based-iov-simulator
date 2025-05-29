@@ -253,8 +253,19 @@ async def list_runs_admin(session: SessionDep, table_view_args: TableViewRequest
 
     # 更新每个Run的状态
     for run in runs:
-        # await session.refresh(run)
         await run.get_status(session)
+
+    runs = await Run.get(
+        # 临时解决方案
+        session,
+        None,  # 不设条件，获取所有运行
+        offset=table_view_args.offset,
+        limit=table_view_args.limit,
+        fetch_mode="all",
+        order_by=[table_view_args.clause(Run)],
+        load=Run.project
+    )
+    # todo优化重复的逻辑
 
     return await RunInfoResponse.from_run(runs)
 
@@ -336,4 +347,3 @@ async def download_run_results_zip_admin(run_id: int, session: SessionDep):
         )
 
 router.include_router(admin_run_router)
-

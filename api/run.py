@@ -58,8 +58,9 @@ async def get_run(
     # 获取Run
     run = await Run.get_exist_one(session, run_id, current_user.id, load=Run.project)
 
-    await run.get_status(session)
     # 更新状态
+    await run.get_status(session)
+
     return await RunInfoResponse.from_run(run)
 
 @router.post("/{run_id}/cancel", response_model=RunInfoResponse)
@@ -96,7 +97,6 @@ async def get_run_file(
 
     return FileResponse(path=await ensure_file_path_valid(run.dir, file_name), filename=file_name)
 
-# 添加到现有的run router定义下
 @router.get("/{run_id}/files", response_class=FileResponse)
 async def download_run_results_zip(
         run_id: int,

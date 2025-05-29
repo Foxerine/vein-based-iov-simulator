@@ -142,12 +142,23 @@ async def list_runs(
         offset=table_view_args.offset,
         limit=table_view_args.limit,
         fetch_mode="all",
-        order_by=[table_view_args.clause(Run)]
+        order_by=[table_view_args.clause(Run)],
+        load=Run.project
     )
 
     # 更新每个Run的状态
     for run in runs:
         await run.get_status(session)
+
+    runs = await Run.get(
+        session,
+        Run.project_id == project_id,
+        offset=table_view_args.offset,
+        limit=table_view_args.limit,
+        fetch_mode="all",
+        order_by=[table_view_args.clause(Run)],
+        load=Run.project
+    )
 
     return await RunInfoResponse.from_run(runs)
 

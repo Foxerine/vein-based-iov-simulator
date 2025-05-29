@@ -7,13 +7,14 @@ from sqlalchemy.orm import selectinload
 from sqlmodel import Field, select, Relationship
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy.sql._typing import _OnClauseArgument
+from sqlalchemy.ext.asyncio import AsyncAttrs
 
 T = TypeVar("T", bound="TableBase")
 M = TypeVar("M", bound="SQLModel")
 
 utcnow = lambda: datetime.now(tz=timezone.utc)
 
-class TableBase:
+class TableBase(AsyncAttrs):
     created_at: datetime = Field(default_factory=utcnow)
     updated_at: datetime = Field(
         sa_type=DateTime,
@@ -56,11 +57,16 @@ class TableBase:
 
         return instances
 
-    async def save(self: T, session: AsyncSession) -> T:
+    async def save(self: T, session: AsyncSession, load: Union[Relationship, None] = None) -> T:
         session.add(self)
         await session.commit()
-        await session.refresh(self)
-        return self
+
+        if load is not None:
+            cls = type(self)
+            return await cls.get(session, cls.id == self.id, load=load)
+        else:
+            await session.refresh(self)
+            return self
 
     async def update(
             self: T,

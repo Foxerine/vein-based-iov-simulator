@@ -7,11 +7,13 @@ import aioshutil
 from aiofiles import os
 from celery.result import AsyncResult
 from fastapi import HTTPException
+from sqlalchemy import exc
 from sqlmodel import Field, SQLModel, Relationship
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from config import config
 from utils.files import list_result_files
+from utils.auth import generate_vnc_uuid
 from worker.worker import celery_app
 from .project import Project
 from .table_base import TableBase
@@ -30,7 +32,7 @@ class RunStatus(str, Enum):
 class RunBase(SQLModel):
     notes: str | None = Field(default=None, max_length=500, description="User notes for this run")
     project_id: int = Field(foreign_key="project.id", index=True, ondelete="CASCADE")
-
+    use_gui: bool = Field(default=False)
 
 class Run(RunBase, TableBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
@@ -48,6 +50,7 @@ class Run(RunBase, TableBase, table=True):
 
     def __init__(self, **data: Any):
         self._dir = None
+        self._uuid = None
         super().__init__(**data)
 
     @classmethod
@@ -75,7 +78,7 @@ class Run(RunBase, TableBase, table=True):
             (cls.id == id) & (Project.user_id == user_id),
             join=(Project, cls.project_id == Project.id),
             load=load,
-        )
+            )
 
         if not instance:
             raise HTTPException(status_code=404, detail="Not found")
@@ -94,6 +97,13 @@ class Run(RunBase, TableBase, table=True):
             )
             self._dir = sync_os.path.normpath(path)
         return self._dir
+
+    async def uuid(self) -> str:
+        """获取run uuid"""
+        if not self.__dict__.get('_uuid'):
+            #todo 似乎与pydantic冲突 不知道有没有更优雅的解法
+            self._uuid = generate_vnc_uuid(self.project.user_id, self.project.id, self.id)
+        return self._uuid
 
     async def _prepare_execution(self) -> None:
         """准备执行环境"""
@@ -123,14 +133,27 @@ class Run(RunBase, TableBase, table=True):
         # 准备环境
         await self._prepare_execution()
 
+        # 准备任务参数
+        task_args = [
+            self.project.user_id,  # user_id
+            self.project.id,       # project_id
+            self.id,               # run_id
+            self.project.dir,      # project_dir
+            self.dir,              # run_dir
+            self.project.veins_config_name  # config_name
+        ]
+
+        # GUI模式需要传入UUID
+        if self.use_gui:
+            vnc_uuid = await self.uuid()
+            task_args.extend([True, vnc_uuid])  # gui_mode=True, vnc_uuid
+        else:
+            task_args.append(False)  # gui_mode=False
+
         # 启动Celery任务
         task = celery_app.send_task(
             'veins_simulation.run',
-            args=[
-                self.project.dir,
-                self.dir,
-                self.project.veins_config_name
-            ]
+            args=task_args
         )
 
         # 更新状态
@@ -149,13 +172,21 @@ class Run(RunBase, TableBase, table=True):
             return self
 
         # 获取任务状态
-        task_result = AsyncResult(self.task_id)
+        task_result = AsyncResult(self.task_id, app=celery_app)
 
         # 根据Celery状态更新Run状态
         if task_result.state == 'PENDING':
-            self.status = RunStatus.STARTING
-        elif task_result.state == 'STARTED':
-            self.status = RunStatus.RUNNING
+            self.status = RunStatus.PENDING
+        elif task_result.state == 'PROGRESS':
+            # 从任务meta中获取详细状态
+            try:
+                meta = task_result.info
+                if isinstance(meta, dict) and 'status' in meta:
+                    self.status = RunStatus(meta['status'])
+                else:
+                    self.status = RunStatus.RUNNING
+            except Exception:
+                self.status = RunStatus.RUNNING
         elif task_result.state in ('SUCCESS', 'FAILURE', 'REVOKED'):
             # 设置对应状态
             status_mapping = {
@@ -167,21 +198,16 @@ class Run(RunBase, TableBase, table=True):
 
             # 统一处理结束时间
             if not self.end_time:
-                try:
-                    # 尝试从结果中获取时间
-                    timeout = 0.5 if task_result.state != 'SUCCESS' else None
-                    result = task_result.get(timeout=timeout, propagate=False)
-
-                    if isinstance(result, dict) and 'time' in result:
-                        self.end_time = datetime.fromisoformat(result['time'])
-                    else:
-                        self.end_time = datetime.now()
-                except Exception:
-                    self.end_time = datetime.now()
+                self.end_time = datetime.now()
 
         # 保存状态
-        await self.save(session)
-        return self
+        load = None
+        try:
+            self.project
+        except exc.MissingGreenlet:
+            load = Run.project
+            # todo 测试为什么这么写不正确
+        return await self.save(session, load=load)
 
     async def cancel(self, session) -> 'Run':
         """
@@ -197,10 +223,50 @@ class Run(RunBase, TableBase, table=True):
         self.status = RunStatus.CANCELLING
         await self.save(session)
 
-        # 发送取消指令
-        celery_app.control.revoke(self.task_id, terminate=True, signal='SIGTERM')
+        # 发送停止任务
+        stop_task = celery_app.send_task(
+            'veins_simulation.stop',
+            args=[self.task_id]
+        )
+
+        # 等待停止任务完成（可选，或者异步处理）
+        try:
+            stop_result = stop_task.get(timeout=30)
+            if isinstance(stop_result, dict) and stop_result.get('status') == RunStatus.CANCELLED:
+                self.status = RunStatus.CANCELLED
+                self.end_time = datetime.now()
+                await self.save(session)
+        except Exception as e:
+            # 如果停止任务失败，仍然标记为已取消
+            self.status = RunStatus.CANCELLED
+            self.end_time = datetime.now()
+            await self.save(session)
 
         return self
+
+    async def get_vnc_url(self) -> str | None:
+        """获取VNC访问URL（仅GUI模式）"""
+        if not self.use_gui or not self.task_id:
+            return None
+
+        if self.status not in [RunStatus.RUNNING]:
+            return None
+
+        try:
+            # 从任务结果中获取VNC URL
+            task_result = AsyncResult(self.task_id, app=celery_app)
+            if task_result.state == 'PROGRESS':
+                meta = task_result.info
+                if isinstance(meta, dict):
+                    return meta.get('vnc_url')
+            elif task_result.state == 'SUCCESS':
+                result = task_result.result
+                if isinstance(result, dict):
+                    return result.get('vnc_url')
+        except Exception:
+            pass
+
+        return None
 
 
 class RunCreateRequest(RunBase):
@@ -213,9 +279,10 @@ class RunInfoResponse(RunBase):
     start_time: datetime | None
     end_time: datetime | None
 
+    vnc_url: str | None = None
+
     files: set[tuple[str, int]]
     """格式: path, size"""
-
 
     created_at: datetime
     updated_at: datetime
@@ -223,7 +290,19 @@ class RunInfoResponse(RunBase):
     @classmethod
     async def __from_run(cls, run: Run) -> "RunInfoResponse":
         await os.makedirs(run.dir, exist_ok=True)
-        return cls.model_validate(run, update={"files": await list_result_files(run.dir)})
+
+        # 获取VNC URL（如果是GUI模式）
+        vnc_url = None
+        if run.use_gui:
+            vnc_url = await run.get_vnc_url()
+
+        return cls.model_validate(
+            run,
+            update={
+                "files": await list_result_files(run.dir),
+                "vnc_url": vnc_url
+            }
+        )
 
     @classmethod
     async def from_run(cls, run: Run | list[Run]) -> Union["RunInfoResponse", list["RunInfoResponse"]]:
