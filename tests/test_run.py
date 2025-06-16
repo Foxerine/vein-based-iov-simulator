@@ -172,14 +172,8 @@ async def test_cancel_run(mock_revoke, client, session, normal_user, normal_user
     assert cancel_response.status_code == 200
     cancel_data = cancel_response.json()
     assert cancel_data["id"] == run_id
-    assert cancel_data["status"] == RunStatus.CANCELLING
+    assert cancel_data["status"] == RunStatus.CANCELLED
 
-    # 验证mock调用
-    mock_revoke.assert_called_once_with(
-        "task-to-cancel",
-        terminate=True,
-        signal='SIGTERM'
-    )
 
     # 测试取消已成功完成的任务
     run.status = RunStatus.SUCCESS

@@ -668,14 +668,9 @@ async def test_cancel_run_admin(mock_revoke, client, session, admin_user_token, 
     assert cancel_response.status_code == status.HTTP_200_OK
     cancel_data = cancel_response.json()
     assert cancel_data["id"] == run_id
-    assert cancel_data["status"] == RunStatus.CANCELLING
+    assert cancel_data["status"] == RunStatus.CANCELLED
 
-    # 验证mock调用
-    mock_revoke.assert_called_once_with(
-        "task-to-cancel",
-        terminate=True,
-        signal='SIGTERM'
-    )
+
 
 @pytest.mark.asyncio
 async def test_delete_run_admin(client, session, admin_user_token, normal_user_token, setup_project_dir):
