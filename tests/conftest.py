@@ -1,7 +1,17 @@
 import asyncio
+import atexit
+import shutil
+import tempfile
 
 import pytest
 import pytest_asyncio
+
+# 测试必须使用独立的临时项目目录，避免误删真实的 user_projects 用户数据
+from config import config as _config
+
+_TEST_PROJECTS_DIR = tempfile.mkdtemp(prefix="iov_test_projects_")
+_config.user_projects_base_dir = _TEST_PROJECTS_DIR
+atexit.register(lambda: shutil.rmtree(_TEST_PROJECTS_DIR, ignore_errors=True))
 from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
