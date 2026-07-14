@@ -45,7 +45,11 @@ _task_container_mapping = {}
 
 def normalize_path_for_docker(path):
     """处理路径，使其适用于Docker挂载"""
-    path = os.path.normpath(path).replace('\\', '/')
+    path = os.path.normpath(path)
+    if not os.path.isabs(path):
+        # Docker bind mount 要求绝对路径；原生 Windows 下也需要绝对化
+        path = os.path.abspath(path)
+    path = path.replace('\\', '/')
     if "microsoft" in platform.uname().release.lower():
         if not os.path.isabs(path):
             path = os.path.abspath(path)
