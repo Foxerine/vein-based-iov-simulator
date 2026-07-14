@@ -12,6 +12,7 @@ router = APIRouter(prefix="/user", tags=["用户"])
 async def read_user(current_user: CurrentActiveUserDep):
     return current_user
 
+
 @router.patch("", response_model=UserInfoResponse)
 async def update_user(session: SessionDep, current_user: CurrentActiveUserDep, update_data: UserUpdateRequest):
     extra_data = {}

@@ -147,8 +147,11 @@ class Project(ProjectBase, TableBase, table=True):
     @classmethod
     @override
     async def get_exist_one(cls: "Project", session: AsyncSession, id: int, user_id: int | None = None) -> "Project":
-        """此方法和 await session.get(cls, 主键)的区别就是当不存在时不返回None，
-        而是会抛出fastapi 404 异常"""
+        """
+        此方法和 await session.get(cls, 主键)的区别就是当不存在时不返回None，
+        而是会抛出fastapi 404 异常
+
+        """
         if not user_id:
             instance = await session.get(cls, id)
         else:

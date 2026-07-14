@@ -32,6 +32,7 @@ async def init_db():
     """初始化数据库"""
     # 创建所有表
     async with engine.begin() as conn:
+        # await conn.execute(text("PRAGMA foreign_keys=ON"))
         await conn.run_sync(SQLModel.metadata.create_all)
 
     async with (AsyncSession(engine) as session):
