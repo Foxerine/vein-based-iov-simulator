@@ -1,6 +1,8 @@
 import asyncio
+import json
 import os as sync_os
 
+import aiofiles
 from aiofiles import os
 from fastapi import APIRouter, HTTPException, status
 from starlette.background import BackgroundTask
@@ -11,7 +13,7 @@ from utils.depends import CurrentActiveUserDep, SessionDep
 from fastapi.responses import FileResponse
 
 from utils.files import ensure_file_path_valid, create_zip_archive
-from utils.result_analysis import analyze_run_dir
+from worker.worker import celery_app
 
 router = APIRouter(prefix="/run", tags=["仿真运行"])
 
@@ -86,13 +88,19 @@ async def cancel_run(
         )
     return await RunInfoResponse.from_run(run)
 
+ANALYSIS_TASK_TIMEOUT_S = 60.0
+
 @router.get("/{run_id}/analysis")
 async def analyze_run(
         run_id: int,
         session: SessionDep,
         current_user: CurrentActiveUserDep
 ):
-    """解析仿真结果（.sca/.vec），返回汇总指标、逐节点统计与时序数据"""
+    """解析仿真结果（.sca/.vec），返回汇总指标、逐节点统计与时序数据。
+
+    解析为CPU密集操作，交由专用 analysis 队列的独立进程worker执行，
+    避免大结果文件在API进程内解析卡死事件循环；结果缓存为 analysis.json。
+    """
     run = await Run.get_exist_one(session, run_id, current_user.id, load=Run.project)
 
     if run.status != RunStatus.SUCCESS:
@@ -100,16 +108,38 @@ async def analyze_run(
             status_code=status.HTTP_409_CONFLICT,
             detail=f"任务状态为 {run.status}，只有成功完成的任务才能分析结果"
         )
+
+    # 缓存命中则直接返回（结果文件在任务成功后不可变）
+    cache_path = sync_os.path.join(run.dir, "analysis.json")
+    if await os.path.exists(cache_path):
+        async with aiofiles.open(cache_path, encoding="utf-8") as f:
+            return json.loads(await f.read())
+
+    task = celery_app.send_task("veins_simulation.analyze", args=[run.dir], queue="analysis")
+    elapsed = 0.0
     try:
-        # 解析为同步IO密集操作，放入线程池避免阻塞事件循环
-        return await asyncio.to_thread(analyze_run_dir, run.dir)
-    except FileNotFoundError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        while not task.ready():
+            if elapsed >= ANALYSIS_TASK_TIMEOUT_S:
+                task.revoke()
+                raise HTTPException(
+                    status_code=status.HTTP_504_GATEWAY_TIMEOUT,
+                    detail="结果解析超时，请稍后重试（请确认 analysis worker 正在运行）"
+                )
+            await asyncio.sleep(0.2)
+            elapsed += 0.2
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"结果解析失败: {str(e)}"
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"无法调度结果解析任务: {str(e)}"
         )
+
+    if task.state == "FAILURE":
+        err = str(task.result)
+        code = status.HTTP_404_NOT_FOUND if "没有 .sca" in err else status.HTTP_500_INTERNAL_SERVER_ERROR
+        raise HTTPException(status_code=code, detail=f"结果解析失败: {err}")
+    return task.result
 
 @router.get("/{run_id}/files/{file_name}", response_class=FileResponse)
 async def get_run_file(

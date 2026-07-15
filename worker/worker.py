@@ -367,6 +367,25 @@ def stop_simulation(task_id: str):
             'error': str(e)
         }
 
+@celery_app.task(name="veins_simulation.analyze")
+def analyze_results(run_dir: str) -> dict:
+    """解析仿真结果（CPU密集），由专用 analysis 队列的独立进程worker执行。
+
+    结果写入 run_dir/analysis.json 作为缓存，API 下次直接读缓存返回。
+    """
+    import json
+
+    from utils.result_analysis import analyze_run_dir
+
+    result = analyze_run_dir(run_dir)
+    cache_path = os.path.join(run_dir, "analysis.json")
+    try:
+        with open(cache_path, "w", encoding="utf-8") as f:
+            json.dump(result, f, ensure_ascii=False)
+    except OSError as e:
+        logger.warning(f"分析结果缓存写入失败（不影响本次返回）: {e}")
+    return result
+
 if __name__ == '__main__':
     argv = [
         'worker',
