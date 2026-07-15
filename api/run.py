@@ -1,3 +1,4 @@
+import asyncio
 import os as sync_os
 
 from aiofiles import os
@@ -10,6 +11,7 @@ from utils.depends import CurrentActiveUserDep, SessionDep
 from fastapi.responses import FileResponse
 
 from utils.files import ensure_file_path_valid, create_zip_archive
+from utils.result_analysis import analyze_run_dir
 
 router = APIRouter(prefix="/run", tags=["仿真运行"])
 
@@ -83,6 +85,31 @@ async def cancel_run(
             detail=str(re)
         )
     return await RunInfoResponse.from_run(run)
+
+@router.get("/{run_id}/analysis")
+async def analyze_run(
+        run_id: int,
+        session: SessionDep,
+        current_user: CurrentActiveUserDep
+):
+    """解析仿真结果（.sca/.vec），返回汇总指标、逐节点统计与时序数据"""
+    run = await Run.get_exist_one(session, run_id, current_user.id, load=Run.project)
+
+    if run.status != RunStatus.SUCCESS:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"任务状态为 {run.status}，只有成功完成的任务才能分析结果"
+        )
+    try:
+        # 解析为同步IO密集操作，放入线程池避免阻塞事件循环
+        return await asyncio.to_thread(analyze_run_dir, run.dir)
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"结果解析失败: {str(e)}"
+        )
 
 @router.get("/{run_id}/files/{file_name}", response_class=FileResponse)
 async def get_run_file(
