@@ -31,6 +31,9 @@ class Config(SQLModel):
     debug: bool = True
     testing: bool = False
 
+    vnc_public_host: str = "localhost"
+    """生成 VNC 访问链接时使用的对外主机名/IP；部署到服务器时必须改为服务器地址"""
+
     max_allowed_table_view_limit: int = 20
     """查表最多允许返回多少行的内容"""
 
@@ -49,7 +52,12 @@ class Config(SQLModel):
             with open(path, "rb") as f:
                 if guessed_str := from_bytes(f.read()).best():
                     _config = Config.model_validate(toml.loads(str(guessed_str)))
-                    logger.info(f"已载入配置文件：{_config}")
+                    # 日志中脱敏，凭据绝不能进入日志文件
+                    _safe = _config.model_dump()
+                    for _k in ("admin_password", "jwt_secret"):
+                        if _safe.get(_k):
+                            _safe[_k] = "***REDACTED***"
+                    logger.info(f"已载入配置文件：{_safe}")
                     return _config
                 else:
                     raise ValueError("无法识别配置文件")

@@ -49,8 +49,9 @@ async def ensure_file_path_valid(base_dir: str, relative_path: str, allow_protec
         base_path = Path(base_dir).resolve()
         file_path = (base_path / relative_path).resolve()
 
-        # 确保文件路径在基础目录内（防止目录遍历）
-        if not str(file_path.parent).startswith(str(base_path)):
+        # 确保文件路径在基础目录内（防止目录遍历；不能用字符串前缀比较，
+        # 否则 .../1/2 会误匹配 .../1/20 造成相邻ID目录越权）
+        if not file_path.is_relative_to(base_path):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="非法访问路径（目录遍历）"

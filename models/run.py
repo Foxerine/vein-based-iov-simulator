@@ -33,6 +33,8 @@ class RunBase(SQLModel):
     notes: str | None = Field(default=None, max_length=500, description="User notes for this run")
     project_id: int = Field(foreign_key="project.id", index=True, ondelete="CASCADE")
     use_gui: bool = Field(default=False)
+    seed_set: int = Field(default=0, ge=0, le=9999,
+                          description="OMNeT++ seed-set 编号，用于不同随机种子的参数扫描")
 
 class Run(RunBase, TableBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
@@ -153,7 +155,8 @@ class Run(RunBase, TableBase, table=True):
         # 启动Celery任务
         task = celery_app.send_task(
             'veins_simulation.run',
-            args=task_args
+            args=task_args,
+            kwargs={'seed_set': self.seed_set}
         )
 
         # 更新状态
@@ -195,6 +198,14 @@ class Run(RunBase, TableBase, table=True):
                 'FAILURE': RunStatus.FAILED
             }
             self.status = status_mapping[task_result.state]
+            # worker 以正常返回的方式报告业务失败/取消（Celery 视为 SUCCESS），
+            # 必须读取返回体中的 status 字段修正，避免失败任务被误报为成功
+            if task_result.state == 'SUCCESS' and isinstance(task_result.result, dict):
+                payload_status = task_result.result.get('status')
+                if payload_status in (RunStatus.FAILED, RunStatus.FAILED.value):
+                    self.status = RunStatus.FAILED
+                elif payload_status in (RunStatus.CANCELLED, RunStatus.CANCELLED.value):
+                    self.status = RunStatus.CANCELLED
 
             # 统一处理结束时间
             if not self.end_time:

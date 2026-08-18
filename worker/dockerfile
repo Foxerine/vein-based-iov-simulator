@@ -71,7 +71,7 @@ RUN /bin/bash -c ". /root/.nix-profile/etc/profile.d/nix.sh && \
 
 # 环境变量
 ENV VEINS_BIN="/opp_env_inst/veins-5.3/bin"
-ENV OMNETPP_BIN="/opp_env_inst/omnetpp-6.1.0/bin"
+ENV OMNETPP_BIN="/opp_env_inst/omnetpp-6.3.0/bin"
 ENV INET_SRC="/opp_env_inst/inet-4.5.4/src"
 
 # GUI相关环境变量

@@ -102,7 +102,8 @@ def move_results(results_dir, run_dir, log_file=None):
 
 @celery_app.task(name="veins_simulation.run", bind=True)
 def run_simulation(self, user_id: str, project_id: str, run_id: str, project_dir: str,
-                   run_dir: str, config_name: str, gui_mode: bool = False, vnc_uuid: str = None):
+                   run_dir: str, config_name: str, gui_mode: bool = False, vnc_uuid: str = None,
+                   seed_set: int = 0):
     """
     执行Veins仿真的工作函数
 
@@ -170,6 +171,7 @@ def run_simulation(self, user_id: str, project_id: str, run_id: str, project_dir
                 "-u", ui_mode,
                 "-c", config_name,
                 "-r", "0",
+                f"--seed-set={int(seed_set)}",
                 "-n", ".:/opp_env_inst/veins-5.3/src/veins:/opp_env_inst/inet-4.5.4/src",
                 "-l", "/opp_env_inst/inet-4.5.4/src/INET",
                 "-l", "/opp_env_inst/veins-5.3/src/veins",
@@ -214,7 +216,8 @@ def run_simulation(self, user_id: str, project_id: str, run_id: str, project_dir
                     port_mappings = container.ports
                     if '8080/tcp' in port_mappings and port_mappings['8080/tcp']:
                         host_port = port_mappings['8080/tcp'][0]['HostPort']
-                        vnc_url = f"http://localhost:{host_port}/vnc/{vnc_uuid}/vnc.html?path=/vnc/{vnc_uuid}/websockify"
+                        vnc_url = (f"http://{config.vnc_public_host}:{host_port}"
+                                   f"/vnc/{vnc_uuid}/vnc.html?path=/vnc/{vnc_uuid}/websockify")
                     else:
                         vnc_url = None
 

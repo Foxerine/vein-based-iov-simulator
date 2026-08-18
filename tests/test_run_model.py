@@ -160,3 +160,43 @@ async def test_get_status_no_task_id(session):
 
     # 验证状态不变
     assert updated_run.status == RunStatus.PENDING
+
+@pytest.mark.asyncio
+@patch('models.run.AsyncResult')
+async def test_get_status_worker_reported_failure(mock_async_result, session):
+    """worker 以正常返回报告业务失败（Celery 状态为 SUCCESS）时，必须映射为 FAILED"""
+    user = User(email="run_failed_payload@example.com", hashed_password="password123")
+    await user.save(session)
+    project = Project(name="测试项目", user_id=user.id)
+    await project.save(session)
+    run = Run(project_id=project.id, task_id="fake-task-id", status=RunStatus.RUNNING)
+    await run.save(session)
+
+    mock_result = MagicMock()
+    mock_result.state = 'SUCCESS'
+    mock_result.result = {'status': 'failed', 'error': 'container exploded'}
+    mock_async_result.return_value = mock_result
+
+    await session.refresh(run, ['project'])
+    updated_run = await run.get_status(session)
+    assert updated_run.status == RunStatus.FAILED
+
+@pytest.mark.asyncio
+@patch('models.run.AsyncResult')
+async def test_get_status_success_payload_stays_success(mock_async_result, session):
+    """正常成功返回仍映射为 SUCCESS"""
+    user = User(email="run_success_payload@example.com", hashed_password="password123")
+    await user.save(session)
+    project = Project(name="测试项目", user_id=user.id)
+    await project.save(session)
+    run = Run(project_id=project.id, task_id="fake-task-id2", status=RunStatus.RUNNING)
+    await run.save(session)
+
+    mock_result = MagicMock()
+    mock_result.state = 'SUCCESS'
+    mock_result.result = {'status': 'success', 'results_files': []}
+    mock_async_result.return_value = mock_result
+
+    await session.refresh(run, ['project'])
+    updated_run = await run.get_status(session)
+    assert updated_run.status == RunStatus.SUCCESS
