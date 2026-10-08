@@ -1,0 +1,458 @@
+{
+  "design": {
+    "freqs_hz": [
+      1,
+      5,
+      10
+    ],
+    "vehicles": [
+      50,
+      300,
+      600
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "sim_time_s": 200,
+    "routes": "calib/routes_{N}.rou.xml (SUMO randomTrips, seed 42)",
+    "config": "WithBeaconing"
+  },
+  "total_wall_clock_s": 11097.4,
+  "n_runs": 27,
+  "runs": [
+    {
+      "freq_hz": 1,
+      "vehicles": 50,
+      "seed": 0,
+      "project_id": 78,
+      "run_id": 158,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:48.296239",
+      "end_time": "2026-10-07T23:03:04.820569",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 1,
+      "vehicles": 50,
+      "seed": 1,
+      "project_id": 78,
+      "run_id": 159,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:48.332943",
+      "end_time": "2026-10-07T23:03:04.980673",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 1,
+      "vehicles": 50,
+      "seed": 2,
+      "project_id": 78,
+      "run_id": 160,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:48.375606",
+      "end_time": "2026-10-07T23:03:05.130468",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 1,
+      "vehicles": 300,
+      "seed": 0,
+      "project_id": 79,
+      "run_id": 161,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:48.425191",
+      "end_time": "2026-10-07T23:05:50.667634",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 1,
+      "vehicles": 300,
+      "seed": 1,
+      "project_id": 79,
+      "run_id": 162,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:48.479132",
+      "end_time": "2026-10-07T23:05:51.222814",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 1,
+      "vehicles": 300,
+      "seed": 2,
+      "project_id": 79,
+      "run_id": 163,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:48.551217",
+      "end_time": "2026-10-07T23:05:51.840731",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 1,
+      "vehicles": 600,
+      "seed": 0,
+      "project_id": 80,
+      "run_id": 164,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:48.626149",
+      "end_time": "2026-10-07T23:15:17.693598",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 1,
+      "vehicles": 600,
+      "seed": 1,
+      "project_id": 80,
+      "run_id": 165,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:48.701784",
+      "end_time": "2026-10-07T23:15:17.708014",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 1,
+      "vehicles": 600,
+      "seed": 2,
+      "project_id": 80,
+      "run_id": 166,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:48.785499",
+      "end_time": "2026-10-07T23:17:55.859130",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 5,
+      "vehicles": 50,
+      "seed": 0,
+      "project_id": 81,
+      "run_id": 167,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:48.857889",
+      "end_time": "2026-10-07T23:06:07.004917",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 5,
+      "vehicles": 50,
+      "seed": 1,
+      "project_id": 81,
+      "run_id": 168,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:48.942447",
+      "end_time": "2026-10-07T23:06:39.341313",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 5,
+      "vehicles": 50,
+      "seed": 2,
+      "project_id": 81,
+      "run_id": 169,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.018003",
+      "end_time": "2026-10-07T23:06:39.357834",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 5,
+      "vehicles": 300,
+      "seed": 0,
+      "project_id": 82,
+      "run_id": 170,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.090117",
+      "end_time": "2026-10-07T23:19:42.521610",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 5,
+      "vehicles": 300,
+      "seed": 1,
+      "project_id": 82,
+      "run_id": 171,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.169552",
+      "end_time": "2026-10-07T23:19:36.698936",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 5,
+      "vehicles": 300,
+      "seed": 2,
+      "project_id": 82,
+      "run_id": 172,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.244091",
+      "end_time": "2026-10-07T23:28:59.955914",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 5,
+      "vehicles": 600,
+      "seed": 0,
+      "project_id": 83,
+      "run_id": 173,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.313263",
+      "end_time": "2026-10-08T00:30:44.032329",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 5,
+      "vehicles": 600,
+      "seed": 1,
+      "project_id": 83,
+      "run_id": 174,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.365087",
+      "end_time": "2026-10-08T00:31:11.744918",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 5,
+      "vehicles": 600,
+      "seed": 2,
+      "project_id": 83,
+      "run_id": 175,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.404102",
+      "end_time": "2026-10-08T00:31:48.509364",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 10,
+      "vehicles": 50,
+      "seed": 0,
+      "project_id": 84,
+      "run_id": 176,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.445683",
+      "end_time": "2026-10-07T23:20:41.495531",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 10,
+      "vehicles": 50,
+      "seed": 1,
+      "project_id": 84,
+      "run_id": 177,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.484602",
+      "end_time": "2026-10-07T23:21:13.867234",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 10,
+      "vehicles": 50,
+      "seed": 2,
+      "project_id": 84,
+      "run_id": 178,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.526061",
+      "end_time": "2026-10-07T23:21:46.217641",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 10,
+      "vehicles": 300,
+      "seed": 0,
+      "project_id": 85,
+      "run_id": 179,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.564508",
+      "end_time": "2026-10-07T23:53:33.320536",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 10,
+      "vehicles": 300,
+      "seed": 1,
+      "project_id": 85,
+      "run_id": 180,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.605707",
+      "end_time": "2026-10-08T00:04:53.813261",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 10,
+      "vehicles": 300,
+      "seed": 2,
+      "project_id": 85,
+      "run_id": 181,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.644269",
+      "end_time": "2026-10-08T00:26:58.180083",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 10,
+      "vehicles": 600,
+      "seed": 0,
+      "project_id": 86,
+      "run_id": 182,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.687750",
+      "end_time": "2026-10-08T01:54:56.498181",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 10,
+      "vehicles": 600,
+      "seed": 1,
+      "project_id": 86,
+      "run_id": 183,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.730035",
+      "end_time": "2026-10-08T02:02:58.478066",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    },
+    {
+      "freq_hz": 10,
+      "vehicles": 600,
+      "seed": 2,
+      "project_id": 86,
+      "run_id": 184,
+      "status": "success",
+      "start_time": "2026-10-07T23:02:49.768703",
+      "end_time": "2026-10-08T02:07:44.955027",
+      "files": [
+        "WithBeaconing-#0.sca",
+        "WithBeaconing-#0.vci",
+        "WithBeaconing-#0.vec",
+        "simulation.log"
+      ]
+    }
+  ]
+}

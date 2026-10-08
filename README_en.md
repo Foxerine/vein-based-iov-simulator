@@ -233,6 +233,10 @@ Once the project is running, FastAPI automatically generates interactive API doc
 └── requirements_worker.txt # Dependencies for the Celery worker
 ```
 
+## Paper Artifacts
+
+The driver scripts, scenarios and processed results of the experiments in the accompanying paper are in [`paper/`](paper/README.md); the raw result files are attached to the GitHub release `v1.0.0`.
+
 ## Acknowledgements
 
 I would like to express my sincere gratitude to my advisor, **Bo Li**, from Hunan Agricultural University, for his invaluable guidance and support throughout the design and development of this project. His expertise and insightful advice were crucial to the successful completion of this work.

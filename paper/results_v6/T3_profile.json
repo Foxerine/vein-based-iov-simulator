@@ -1,0 +1,83 @@
+{
+  "image_gib": 4.517555013298988,
+  "workload_ids": [
+    "W1",
+    "W2",
+    "W3",
+    "W4"
+  ],
+  "per_workload": {
+    "W1": {
+      "runs": [
+        218,
+        219,
+        220,
+        221,
+        222
+      ],
+      "samples": 30,
+      "mem_peak_mib": 359.609375,
+      "mem_peak_max_mib": 440.9375,
+      "cpu_mean_pct": 84.45522047266681,
+      "pids_peak": 23,
+      "startup_s": 9.454479551315307
+    },
+    "W2": {
+      "runs": [
+        223,
+        224,
+        225,
+        226,
+        227
+      ],
+      "samples": 326,
+      "mem_peak_mib": 295.0265625,
+      "mem_peak_max_mib": 320.5390625,
+      "cpu_mean_pct": 98.50448445739273,
+      "pids_peak": 23,
+      "startup_s": 9.460524749755859
+    },
+    "W3": {
+      "runs": [
+        228,
+        229,
+        230,
+        231,
+        232
+      ],
+      "samples": 3505,
+      "mem_peak_mib": 369.478125,
+      "mem_peak_max_mib": 374.88671875,
+      "cpu_mean_pct": 99.79711229233222,
+      "pids_peak": 23,
+      "startup_s": 9.74706826210022
+    },
+    "W4": {
+      "runs": [
+        233,
+        234,
+        235,
+        236,
+        237
+      ],
+      "samples": 7349,
+      "mem_peak_mib": 368.9375,
+      "mem_peak_max_mib": 437.78515625,
+      "cpu_mean_pct": 99.79645461516792,
+      "pids_peak": 23,
+      "startup_s": 9.292358779907227
+    }
+  },
+  "mem_peak_min_mib": 295.0265625,
+  "mem_peak_max_mib": 440.9375,
+  "cpu_mean_max_pct": 99.79711229233222,
+  "startup_breakdown_runs": 10,
+  "launchd_s": 2.0024617433547975,
+  "oppenv_s": 4.969203066825867,
+  "ned_s": 0.6115836858749389,
+  "startup_to_sim_s": 7.583248496055603,
+  "quota_not_binding_check": {
+    "cli_wall_mean_s_no_quota": 11.24,
+    "platform_container_run_mean_s_with_quota": 10.387
+  }
+}

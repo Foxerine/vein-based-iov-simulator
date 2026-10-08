@@ -1,0 +1,58 @@
+{
+  "timestamp": "2026-10-08T13:47:13",
+  "workload": "W1",
+  "cli_parallel_total_s": 16.0,
+  "cli_parallel_runs": [
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 15.3,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2b_W1_s0\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 1,
+      "returncode": 0,
+      "wall_s": 15.94,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2b_W1_s1\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 2,
+      "returncode": 0,
+      "wall_s": 15.55,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2b_W1_s2\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 3,
+      "returncode": 0,
+      "wall_s": 15.95,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2b_W1_s3\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 4,
+      "returncode": 0,
+      "wall_s": 15.78,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2b_W1_s4\\results\\Default-#0.sca"
+    }
+  ],
+  "cli_parallel_returncodes_ok": true,
+  "serial_total_s": 55.3,
+  "platform_parallel_total_s": 14.8,
+  "speedup_cli_parallel": 3.46,
+  "speedup_platform_parallel": 3.74,
+  "platform_over_cli_parallel": 0.927,
+  "cpu_base_mhz": 2201,
+  "cpu_perf_pct_cli_parallel": {
+    "mean": 187.03,
+    "sd": 1.34,
+    "min": 185.91,
+    "max": 189.88,
+    "n": 7
+  },
+  "scalars_identical_to_platform_same_seed": [
+    true,
+    true,
+    true,
+    true,
+    true
+  ]
+}

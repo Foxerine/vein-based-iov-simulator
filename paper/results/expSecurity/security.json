@@ -1,0 +1,375 @@
+{
+  "timestamp": "2026-10-07T22:01:08",
+  "victim": {
+    "project_id": 46,
+    "run_id": 85
+  },
+  "cross_user": {
+    "total_requests": 1008,
+    "rounds": 72,
+    "endpoints": 14,
+    "elapsed_s": 5.7,
+    "all_404": true,
+    "non_404": [],
+    "per_endpoint": {
+      "GET /project/{pid}": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "PATCH /project/{pid}": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "DELETE /project/{pid}": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "GET /project/{pid}/files": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "GET /project/{pid}/files/Makefile": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "DELETE /project/{pid}/files/Makefile": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "GET /project/{pid}/runs": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "POST /run": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "GET /run/{rid}": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "POST /run/{rid}/execute": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "POST /run/{rid}/cancel": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "GET /run/{rid}/files": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "GET /run/{rid}/files/Default-#0.sca": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      },
+      "GET /run/{rid}/analysis": {
+        "n": 72,
+        "codes": {
+          "404": 72
+        }
+      }
+    }
+  },
+  "existence_oracle": {
+    "all_identical": true,
+    "cases": [
+      {
+        "endpoint": "GET /project/46",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "PATCH /project/46",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "DELETE /project/46",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "GET /project/46/files",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "GET /project/46/files/Makefile",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "DELETE /project/46/files/Makefile",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "GET /project/46/runs",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "POST /run",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "GET /run/85",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "POST /run/85/execute",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "POST /run/85/cancel",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "GET /run/85/files",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "GET /run/85/files/Default-#0.sca",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      },
+      {
+        "endpoint": "GET /run/85/analysis",
+        "victim": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "nonexistent": [
+          404,
+          "{\"detail\":\"Not found\"}"
+        ],
+        "identical": true
+      }
+    ]
+  },
+  "integrity": {
+    "unchanged": true,
+    "files_checked": 15,
+    "before": {
+      "name": "secB-1791381668",
+      "veins_config_name": "Default",
+      "run_status": "success",
+      "files": {
+        "project/Makefile": "a38f37e99c4ec58571d187aa29d13f1296f07b802d442d9279edaf3b84234ad8",
+        "project/RSUExampleScenario.ned": "35ced5b9fccdc8e3c6802ec40b105cbbad3dc533fdb405cfe987b8b55af27d18",
+        "project/antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "project/config.xml": "7eed494184fa5464513e9732b6598dd7b5bc5c121a45fbf35057fa3cba0f73b6",
+        "project/erlangen.launchd.xml": "b9c1ecf230cee607aa0c13c5fa62dd7a90ba12f98a75f95e9f0680eff16a3085",
+        "project/erlangen.net.xml": "9d16605eefa0530811a74feb22275c48fb3ba907fc1e8c42dd234a88460ef3ed",
+        "project/erlangen.poly.xml": "815b95e0aa12fb3af34cd1cd863fb9b28e5a5b82ebbacadc7ec20040a4724b7e",
+        "project/erlangen.rou.xml": "1a5963e902cc4632e2f1e16d11df09ed1e85834949bad07c2750639b6c259db4",
+        "project/erlangen.sumo.cfg": "f77c894a84d9f2250dfc4f490b908a65b61409534a53e6917f09c01b8b6a6d1e",
+        "project/omnetpp.ini": "8d42f0f010c7425363c461cac1d22810dbfc634fbd5e8d26d3245eb8fc892622",
+        "project/project": "8d50fab4f07357aa3a6cabdd70ea6ff5302e6a76a019a39b2053a6cca73d747a",
+        "run/Default-#0.sca": "2e6524d4ab812a608e1649b7cab9ac88d3c82982f5be85f5480cf6bb2c45342f",
+        "run/Default-#0.vci": "2e6524d4ab812a608e1649b7cab9ac88d3c82982f5be85f5480cf6bb2c45342f",
+        "run/Default-#0.vec": "2e6524d4ab812a608e1649b7cab9ac88d3c82982f5be85f5480cf6bb2c45342f",
+        "run/simulation.log": "2d8bc869b4cc914561860015e508ae5267abc136bb9f746ec9ea4c915c695089"
+      }
+    },
+    "after": {
+      "name": "secB-1791381668",
+      "veins_config_name": "Default",
+      "run_status": "success",
+      "files": {
+        "project/Makefile": "a38f37e99c4ec58571d187aa29d13f1296f07b802d442d9279edaf3b84234ad8",
+        "project/RSUExampleScenario.ned": "35ced5b9fccdc8e3c6802ec40b105cbbad3dc533fdb405cfe987b8b55af27d18",
+        "project/antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "project/config.xml": "7eed494184fa5464513e9732b6598dd7b5bc5c121a45fbf35057fa3cba0f73b6",
+        "project/erlangen.launchd.xml": "b9c1ecf230cee607aa0c13c5fa62dd7a90ba12f98a75f95e9f0680eff16a3085",
+        "project/erlangen.net.xml": "9d16605eefa0530811a74feb22275c48fb3ba907fc1e8c42dd234a88460ef3ed",
+        "project/erlangen.poly.xml": "815b95e0aa12fb3af34cd1cd863fb9b28e5a5b82ebbacadc7ec20040a4724b7e",
+        "project/erlangen.rou.xml": "1a5963e902cc4632e2f1e16d11df09ed1e85834949bad07c2750639b6c259db4",
+        "project/erlangen.sumo.cfg": "f77c894a84d9f2250dfc4f490b908a65b61409534a53e6917f09c01b8b6a6d1e",
+        "project/omnetpp.ini": "8d42f0f010c7425363c461cac1d22810dbfc634fbd5e8d26d3245eb8fc892622",
+        "project/project": "8d50fab4f07357aa3a6cabdd70ea6ff5302e6a76a019a39b2053a6cca73d747a",
+        "run/Default-#0.sca": "2e6524d4ab812a608e1649b7cab9ac88d3c82982f5be85f5480cf6bb2c45342f",
+        "run/Default-#0.vci": "2e6524d4ab812a608e1649b7cab9ac88d3c82982f5be85f5480cf6bb2c45342f",
+        "run/Default-#0.vec": "2e6524d4ab812a608e1649b7cab9ac88d3c82982f5be85f5480cf6bb2c45342f",
+        "run/simulation.log": "2d8bc869b4cc914561860015e508ae5267abc136bb9f746ec9ea4c915c695089"
+      }
+    }
+  },
+  "authentication": {
+    "no_token": {
+      "n": 14,
+      "codes": {
+        "401": 14
+      }
+    },
+    "forged_signature": {
+      "n": 14,
+      "codes": {
+        "401": 14
+      }
+    },
+    "expired": {
+      "n": 14,
+      "codes": {
+        "401": 14
+      }
+    },
+    "alg_none": {
+      "n": 14,
+      "codes": {
+        "401": 14
+      }
+    },
+    "normal_user_on_admin_endpoints": {
+      "n": 5,
+      "codes": {
+        "403": 5
+      }
+    }
+  },
+  "vnc_token": {
+    "token_1": {
+      "uuid_version": 4,
+      "ready_s": 8.6
+    },
+    "token_2": {
+      "uuid_version": 4,
+      "ready_s": 8.0
+    },
+    "tokens_differ_same_project": true,
+    "legacy_token_differs": true,
+    "probes_while_running": {
+      "correct_token": 200,
+      "legacy_sha256_token": 404,
+      "random_uuid4": 404,
+      "last_char_tampered": 404,
+      "root_path": 404
+    },
+    "probe_after_cancel": "unreachable (ConnectError)",
+    "containers_left_after_cancel": "none"
+  }
+}

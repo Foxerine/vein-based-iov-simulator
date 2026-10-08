@@ -1,0 +1,233 @@
+[
+  {
+    "type": "column_clustered",
+    "categories_zh": [
+      "环境部署",
+      "项目配置",
+      "执行与监控",
+      "结果获取"
+    ],
+    "categories": [
+      "Environment deployment",
+      "Project configuration",
+      "Execution & monitoring",
+      "Result retrieval"
+    ],
+    "series": [
+      {
+        "name_zh": "传统 Veins 工作流",
+        "name_en": "Traditional Veins workflow",
+        "values": [
+          25,
+          30,
+          5,
+          5
+        ]
+      },
+      {
+        "name_zh": "本平台",
+        "name_en": "Our platform",
+        "values": [
+          3,
+          4,
+          3,
+          1
+        ]
+      }
+    ],
+    "y_title_zh": "手动操作步数",
+    "y_title_en": "Manual steps",
+    "x_title_zh": "",
+    "x_title_en": "",
+    "label_format": "0",
+    "caption": "Fig. 17. Manual steps per phase: traditional workflow vs. our platform."
+  },
+  {
+    "type": "line_markers",
+    "categories": [
+      "W1",
+      "W2",
+      "W3",
+      "W4"
+    ],
+    "series": [
+      {
+        "name_zh": "平台并行（5个任务）",
+        "name_en": "Platform, 5 tasks",
+        "values": [
+          3.74,
+          3.52,
+          2.94,
+          3.12
+        ]
+      },
+      {
+        "name_zh": "命令行并行（5个同时）",
+        "name_en": "Command line, 5 at once",
+        "values": [
+          3.46,
+          3.33,
+          2.78,
+          2.98
+        ]
+      }
+    ],
+    "y_title_zh": "加速比（倍）",
+    "y_title_en": "Speedup (×)",
+    "x_title_zh": "负载（单次耗时递增）",
+    "x_title_en": "Workload (increasing single-run time)",
+    "label_format": "0.00",
+    "label_positions": [
+      "above",
+      "below"
+    ],
+    "primary_max": 5,
+    "secondary": {
+      "name_zh": "并行效率 (%)",
+      "name_en": "Parallel efficiency (%)",
+      "values": [
+        74.8,
+        70.4,
+        58.8,
+        62.4
+      ],
+      "mirror": true,
+      "axis_max": 100
+    },
+    "caption": "Fig. 18. Speedup and parallel efficiency of five concurrent tasks under four workloads: platform vs. command line."
+  },
+  {
+    "type": "line_markers",
+    "categories": [
+      "N=1",
+      "N=2",
+      "N=5",
+      "N=10"
+    ],
+    "series": [
+      {
+        "name_zh": "实测总耗时 (s)",
+        "name_en": "Measured total time (s)",
+        "values": [
+          11.28,
+          13.61,
+          14.87,
+          28.68
+        ]
+      }
+    ],
+    "y_title_zh": "总耗时（s）",
+    "y_title_en": "Total time (s)",
+    "x_title_zh": "同时提交的任务数",
+    "x_title_en": "Concurrently submitted tasks",
+    "label_format": "0.0",
+    "label_positions": [
+      "above"
+    ],
+    "caption": "Fig. 19. Total completion time vs. number of concurrent tasks (short-task workload)."
+  },
+  {
+    "type": "line_markers",
+    "categories": [
+      "1 Hz",
+      "5 Hz",
+      "10 Hz"
+    ],
+    "series": [
+      {
+        "name_zh": "50辆",
+        "name_en": "50 vehicles",
+        "values": [
+          77.287,
+          77.352,
+          76.667
+        ]
+      },
+      {
+        "name_zh": "300辆",
+        "name_en": "300 vehicles",
+        "values": [
+          70.911,
+          69.621,
+          69.338
+        ]
+      },
+      {
+        "name_zh": "600辆",
+        "name_en": "600 vehicles",
+        "values": [
+          70.613,
+          69.494,
+          67.502
+        ]
+      }
+    ],
+    "y_title_zh": "",
+    "y_title_en": "Frame reception ratio (%)",
+    "x_title_zh": "信标频率",
+    "x_title_en": "Beacon frequency",
+    "label_format": "0.0",
+    "label_positions": [
+      "above",
+      "above",
+      "below"
+    ],
+    "point_label_positions": [],
+    "caption": "Fig. 20. Frame reception ratio versus beacon frequency under three vehicle densities."
+  },
+  {
+    "type": "line_markers",
+    "categories": [
+      "1 Hz",
+      "5 Hz",
+      "10 Hz"
+    ],
+    "series": [
+      {
+        "name_zh": "50辆",
+        "name_en": "50 vehicles",
+        "values": [
+          0.116,
+          0.574,
+          1.14
+        ]
+      },
+      {
+        "name_zh": "300辆",
+        "name_en": "300 vehicles",
+        "values": [
+          0.497,
+          2.425,
+          4.864
+        ]
+      },
+      {
+        "name_zh": "600辆",
+        "name_en": "600 vehicles",
+        "values": [
+          0.719,
+          3.506,
+          6.905
+        ]
+      }
+    ],
+    "y_title_zh": "",
+    "y_title_en": "Channel busy ratio (%)",
+    "x_title_zh": "信标频率",
+    "x_title_en": "Beacon frequency",
+    "label_format": "0.00",
+    "label_positions": [
+      "below",
+      "right",
+      "above"
+    ],
+    "point_label_positions": [
+      [
+        1,
+        1,
+        "left"
+      ]
+    ],
+    "caption": "Fig. 21. Channel busy ratio versus beacon frequency under three vehicle densities."
+  }
+]

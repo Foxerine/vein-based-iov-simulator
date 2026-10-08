@@ -1,0 +1,253 @@
+{
+  "timestamp": "2026-10-08T15:46:38",
+  "image": "veins-worker-test-gui",
+  "b0_cli": {
+    "returncode": 0,
+    "sca_in_project_results": true,
+    "identical_to_reference": true,
+    "build_artifacts_in_project": []
+  },
+  "b1_rounds": [
+    {
+      "round": 0,
+      "project_id": 105,
+      "n": 10,
+      "total_s": 27.7,
+      "all_ok": true,
+      "build_artifacts_in_shared_project_dir": [],
+      "runs": [
+        {
+          "run_id": 257,
+          "seed": 0,
+          "status": "success",
+          "sca_seedset": 0,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 258,
+          "seed": 1,
+          "status": "success",
+          "sca_seedset": 1,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 259,
+          "seed": 2,
+          "status": "success",
+          "sca_seedset": 2,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 260,
+          "seed": 3,
+          "status": "success",
+          "sca_seedset": 3,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 261,
+          "seed": 4,
+          "status": "success",
+          "sca_seedset": 4,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 262,
+          "seed": 0,
+          "status": "success",
+          "sca_seedset": 0,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 263,
+          "seed": 1,
+          "status": "success",
+          "sca_seedset": 1,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 264,
+          "seed": 2,
+          "status": "success",
+          "sca_seedset": 2,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 265,
+          "seed": 3,
+          "status": "success",
+          "sca_seedset": 3,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 266,
+          "seed": 4,
+          "status": "success",
+          "sca_seedset": 4,
+          "identical_to_reference": true
+        }
+      ]
+    },
+    {
+      "round": 1,
+      "project_id": 106,
+      "n": 10,
+      "total_s": 26.5,
+      "all_ok": true,
+      "build_artifacts_in_shared_project_dir": [],
+      "runs": [
+        {
+          "run_id": 267,
+          "seed": 0,
+          "status": "success",
+          "sca_seedset": 0,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 268,
+          "seed": 1,
+          "status": "success",
+          "sca_seedset": 1,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 269,
+          "seed": 2,
+          "status": "success",
+          "sca_seedset": 2,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 270,
+          "seed": 3,
+          "status": "success",
+          "sca_seedset": 3,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 271,
+          "seed": 4,
+          "status": "success",
+          "sca_seedset": 4,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 272,
+          "seed": 0,
+          "status": "success",
+          "sca_seedset": 0,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 273,
+          "seed": 1,
+          "status": "success",
+          "sca_seedset": 1,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 274,
+          "seed": 2,
+          "status": "success",
+          "sca_seedset": 2,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 275,
+          "seed": 3,
+          "status": "success",
+          "sca_seedset": 3,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 276,
+          "seed": 4,
+          "status": "success",
+          "sca_seedset": 4,
+          "identical_to_reference": true
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "project_id": 107,
+      "n": 10,
+      "total_s": 28.9,
+      "all_ok": true,
+      "build_artifacts_in_shared_project_dir": [],
+      "runs": [
+        {
+          "run_id": 277,
+          "seed": 0,
+          "status": "success",
+          "sca_seedset": 0,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 278,
+          "seed": 1,
+          "status": "success",
+          "sca_seedset": 1,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 279,
+          "seed": 2,
+          "status": "success",
+          "sca_seedset": 2,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 280,
+          "seed": 3,
+          "status": "success",
+          "sca_seedset": 3,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 281,
+          "seed": 4,
+          "status": "success",
+          "sca_seedset": 4,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 282,
+          "seed": 0,
+          "status": "success",
+          "sca_seedset": 0,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 283,
+          "seed": 1,
+          "status": "success",
+          "sca_seedset": 1,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 284,
+          "seed": 2,
+          "status": "success",
+          "sca_seedset": 2,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 285,
+          "seed": 3,
+          "status": "success",
+          "sca_seedset": 3,
+          "identical_to_reference": true
+        },
+        {
+          "run_id": 286,
+          "seed": 4,
+          "status": "success",
+          "sca_seedset": 4,
+          "identical_to_reference": true
+        }
+      ]
+    }
+  ],
+  "all_ok": true
+}

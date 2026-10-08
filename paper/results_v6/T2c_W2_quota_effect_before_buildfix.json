@@ -1,0 +1,321 @@
+{
+  "timestamp": "2026-10-08T15:31:55",
+  "workload": "W2",
+  "quota_flags": [
+    "--cpus",
+    "2.0",
+    "--memory",
+    "4g",
+    "--memory-swap",
+    "4g",
+    "--pids-limit",
+    "1024"
+  ],
+  "repeats": 2,
+  "t2_platform_parallel_total_s": 136.7,
+  "summary": {
+    "cli": {
+      "total_s": [
+        133.2,
+        131.5
+      ],
+      "mean_total_s": 132.3
+    },
+    "cli_quota": {
+      "total_s": [
+        131.9,
+        131.4
+      ],
+      "mean_total_s": 131.7
+    },
+    "platform": {
+      "total_s": [
+        132.4,
+        123.1
+      ],
+      "mean_total_s": 127.8
+    }
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "mode": "cli",
+      "total_s": 133.2,
+      "all_ok": true,
+      "scalars_identical_to_T2_platform": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "runs": [
+        {
+          "seed": 0,
+          "returncode": 0,
+          "wall_s": 133.16,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_0_s0\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 1,
+          "returncode": 0,
+          "wall_s": 132.22,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_0_s1\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 2,
+          "returncode": 0,
+          "wall_s": 133.02,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_0_s2\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 3,
+          "returncode": 0,
+          "wall_s": 131.86,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_0_s3\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 4,
+          "returncode": 0,
+          "wall_s": 131.5,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_0_s4\\results\\WithBeaconing-#0.sca"
+        }
+      ]
+    },
+    {
+      "round": 0,
+      "mode": "cli_quota",
+      "total_s": 131.9,
+      "all_ok": true,
+      "scalars_identical_to_T2_platform": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "runs": [
+        {
+          "seed": 0,
+          "returncode": 0,
+          "wall_s": 131.36,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_quota_0_s0\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 1,
+          "returncode": 0,
+          "wall_s": 130.67,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_quota_0_s1\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 2,
+          "returncode": 0,
+          "wall_s": 130.78,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_quota_0_s2\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 3,
+          "returncode": 0,
+          "wall_s": 131.91,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_quota_0_s3\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 4,
+          "returncode": 0,
+          "wall_s": 131.16,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_quota_0_s4\\results\\WithBeaconing-#0.sca"
+        }
+      ]
+    },
+    {
+      "round": 0,
+      "mode": "platform",
+      "total_s": 132.4,
+      "all_ok": true,
+      "scalars_identical_to_T2_platform": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "runs": [
+        {
+          "seed": 0,
+          "run_id": 247,
+          "status": "success",
+          "container_run_s": 131.33,
+          "sca": "D:\\thesis\\experiments\\results_v6\\T2c_W2_platform_0\\run_247\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 1,
+          "run_id": 248,
+          "status": "success",
+          "container_run_s": 130.37,
+          "sca": "D:\\thesis\\experiments\\results_v6\\T2c_W2_platform_0\\run_248\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 2,
+          "run_id": 249,
+          "status": "success",
+          "container_run_s": 130.65,
+          "sca": "D:\\thesis\\experiments\\results_v6\\T2c_W2_platform_0\\run_249\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 3,
+          "run_id": 250,
+          "status": "success",
+          "container_run_s": 130.53,
+          "sca": "D:\\thesis\\experiments\\results_v6\\T2c_W2_platform_0\\run_250\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 4,
+          "run_id": 251,
+          "status": "success",
+          "container_run_s": 129.62,
+          "sca": "D:\\thesis\\experiments\\results_v6\\T2c_W2_platform_0\\run_251\\WithBeaconing-#0.sca"
+        }
+      ]
+    },
+    {
+      "round": 1,
+      "mode": "cli",
+      "total_s": 131.5,
+      "all_ok": true,
+      "scalars_identical_to_T2_platform": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "runs": [
+        {
+          "seed": 0,
+          "returncode": 0,
+          "wall_s": 130.98,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_1_s0\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 1,
+          "returncode": 0,
+          "wall_s": 129.92,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_1_s1\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 2,
+          "returncode": 0,
+          "wall_s": 130.27,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_1_s2\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 3,
+          "returncode": 0,
+          "wall_s": 131.53,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_1_s3\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 4,
+          "returncode": 0,
+          "wall_s": 131.39,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_1_s4\\results\\WithBeaconing-#0.sca"
+        }
+      ]
+    },
+    {
+      "round": 1,
+      "mode": "cli_quota",
+      "total_s": 131.4,
+      "all_ok": true,
+      "scalars_identical_to_T2_platform": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "runs": [
+        {
+          "seed": 0,
+          "returncode": 0,
+          "wall_s": 128.97,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_quota_1_s0\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 1,
+          "returncode": 0,
+          "wall_s": 129.34,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_quota_1_s1\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 2,
+          "returncode": 0,
+          "wall_s": 129.5,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_quota_1_s2\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 3,
+          "returncode": 0,
+          "wall_s": 131.33,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_quota_1_s3\\results\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 4,
+          "returncode": 0,
+          "wall_s": 129.94,
+          "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2c_W2_cli_quota_1_s4\\results\\WithBeaconing-#0.sca"
+        }
+      ]
+    },
+    {
+      "round": 1,
+      "mode": "platform",
+      "total_s": 123.1,
+      "all_ok": false,
+      "scalars_identical_to_T2_platform": [
+        false,
+        true,
+        true,
+        true,
+        true
+      ],
+      "runs": [
+        {
+          "seed": 0,
+          "run_id": 252,
+          "status": "failed",
+          "container_run_s": 8.12,
+          "sca": null
+        },
+        {
+          "seed": 1,
+          "run_id": 253,
+          "status": "success",
+          "container_run_s": 121.19,
+          "sca": "D:\\thesis\\experiments\\results_v6\\T2c_W2_platform_1\\run_253\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 2,
+          "run_id": 254,
+          "status": "success",
+          "container_run_s": 121.66,
+          "sca": "D:\\thesis\\experiments\\results_v6\\T2c_W2_platform_1\\run_254\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 3,
+          "run_id": 255,
+          "status": "success",
+          "container_run_s": 120.62,
+          "sca": "D:\\thesis\\experiments\\results_v6\\T2c_W2_platform_1\\run_255\\WithBeaconing-#0.sca"
+        },
+        {
+          "seed": 4,
+          "run_id": 256,
+          "status": "success",
+          "container_run_s": 121.29,
+          "sca": "D:\\thesis\\experiments\\results_v6\\T2c_W2_platform_1\\run_256\\WithBeaconing-#0.sca"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-10-08T15:48:31",
+  "headless_kwargs": {
+    "security_opt": [
+      "no-new-privileges:true"
+    ],
+    "network_mode": "none"
+  },
+  "gui_kwargs": {
+    "security_opt": [
+      "no-new-privileges:true"
+    ]
+  },
+  "headless": {
+    "no_new_privs": true,
+    "resolve_host": false,
+    "redis_port": "blocked",
+    "raw": "NoNewPrivs:\t1\nresolve=fail\nredis_port=blocked"
+  },
+  "gui": {
+    "no_new_privs": true,
+    "resolve_host": true,
+    "redis_port": "open",
+    "raw": "NoNewPrivs:\t1\nresolve=ok\nredis_port=open"
+  },
+  "gui_network_redis_without_password": "NOAUTH Authentication required."
+}

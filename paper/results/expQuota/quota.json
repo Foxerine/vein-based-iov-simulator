@@ -1,0 +1,63 @@
+{
+  "quota_kwargs": {
+    "nano_cpus": 2000000000,
+    "mem_limit": "4g",
+    "memswap_limit": "4g",
+    "pids_limit": 1024
+  },
+  "image": "veins-worker-test-gui",
+  "memory": {
+    "with_quota": {
+      "exit_code": 137,
+      "oom_killed": true,
+      "output": ""
+    },
+    "without_quota": {
+      "exit_code": 0,
+      "oom_killed": false,
+      "output": "allocated 5 GiB"
+    }
+  },
+  "pids": {
+    "with_quota": {
+      "exit_code": 0,
+      "oom_killed": false,
+      "output": "fork failed after 1023 children: BlockingIOError"
+    },
+    "without_quota": {
+      "exit_code": 0,
+      "oom_killed": false,
+      "output": "spawned 3000 children"
+    }
+  },
+  "cpu": {
+    "with_quota": {
+      "cpu_pct_samples": [
+        197,
+        197,
+        197,
+        202,
+        198,
+        201,
+        200,
+        198
+      ],
+      "cpu_pct_mean": 198.7,
+      "busy_loops": 8
+    },
+    "without_quota": {
+      "cpu_pct_samples": [
+        803,
+        795,
+        814,
+        821,
+        796,
+        801,
+        795,
+        798
+      ],
+      "cpu_pct_mean": 802.9,
+      "busy_loops": 8
+    }
+  }
+}

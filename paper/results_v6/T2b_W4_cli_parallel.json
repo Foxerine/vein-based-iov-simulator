@@ -1,0 +1,58 @@
+{
+  "timestamp": "2026-10-08T15:16:08",
+  "workload": "W4",
+  "cli_parallel_total_s": 3195.1,
+  "cli_parallel_runs": [
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 3190.11,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2b_W4_s0\\results\\WithBeaconing-#0.sca"
+    },
+    {
+      "seed": 1,
+      "returncode": 0,
+      "wall_s": 3122.41,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2b_W4_s1\\results\\WithBeaconing-#0.sca"
+    },
+    {
+      "seed": 2,
+      "returncode": 0,
+      "wall_s": 3091.22,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2b_W4_s2\\results\\WithBeaconing-#0.sca"
+    },
+    {
+      "seed": 3,
+      "returncode": 0,
+      "wall_s": 3101.16,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2b_W4_s3\\results\\WithBeaconing-#0.sca"
+    },
+    {
+      "seed": 4,
+      "returncode": 0,
+      "wall_s": 3195.05,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2b_W4_s4\\results\\WithBeaconing-#0.sca"
+    }
+  ],
+  "cli_parallel_returncodes_ok": true,
+  "serial_total_s": 9532.2,
+  "platform_parallel_total_s": 3051.0,
+  "speedup_cli_parallel": 2.98,
+  "speedup_platform_parallel": 3.12,
+  "platform_over_cli_parallel": 0.955,
+  "cpu_base_mhz": 2201,
+  "cpu_perf_pct_cli_parallel": {
+    "mean": 186.76,
+    "sd": 0.84,
+    "min": 185.41,
+    "max": 194.44,
+    "n": 1583
+  },
+  "scalars_identical_to_platform_same_seed": [
+    true,
+    true,
+    true,
+    true,
+    true
+  ]
+}

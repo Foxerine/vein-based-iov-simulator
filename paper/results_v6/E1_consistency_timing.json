@@ -1,0 +1,223 @@
+{
+  "timestamp": "2026-10-08T02:12:08",
+  "scenario": "RSUExampleScenario Default, 200 s, seed-set 0",
+  "cli_wall_s": {
+    "mean": 11.24,
+    "sd": 0.51,
+    "min": 10.81,
+    "max": 12.34,
+    "n": 10
+  },
+  "platform_wall_s": {
+    "mean": 11.36,
+    "sd": 0.33,
+    "min": 11.25,
+    "max": 12.29,
+    "n": 10
+  },
+  "overhead_mean_s": 0.13,
+  "platform_breakdown_mean_s": {
+    "queue_s": 0.01,
+    "create_container_s": 0.36,
+    "container_run_s": 10.39,
+    "finalize_s": 0.12,
+    "status_sync_s": 0.48
+  },
+  "scalars_per_run": 2238,
+  "runs_compared": 20,
+  "differing_scalar_lines_total": 0,
+  "cli": [
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 11.88,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\e1_cli_0\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 10.94,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\e1_cli_1\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 10.94,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\e1_cli_2\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 10.86,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\e1_cli_3\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 11.45,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\e1_cli_4\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 11.27,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\e1_cli_5\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 12.34,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\e1_cli_6\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 11.07,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\e1_cli_7\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 10.82,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\e1_cli_8\\results\\Default-#0.sca"
+    },
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 10.81,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\e1_cli_9\\results\\Default-#0.sca"
+    }
+  ],
+  "platform": [
+    {
+      "run_id": 185,
+      "status": "success",
+      "wall_s": 11.26,
+      "breakdown": {
+        "queue_s": 0.02,
+        "create_container_s": 0.33,
+        "container_run_s": 10.63,
+        "finalize_s": 0.12,
+        "status_sync_s": 0.16
+      },
+      "sca": "D:\\thesis\\experiments\\results_v6\\E1_platform\\run_185\\Default-#0.sca"
+    },
+    {
+      "run_id": 186,
+      "status": "success",
+      "wall_s": 11.27,
+      "breakdown": {
+        "queue_s": 0.01,
+        "create_container_s": 0.34,
+        "container_run_s": 10.29,
+        "finalize_s": 0.12,
+        "status_sync_s": 0.5
+      },
+      "sca": "D:\\thesis\\experiments\\results_v6\\E1_platform\\run_186\\Default-#0.sca"
+    },
+    {
+      "run_id": 187,
+      "status": "success",
+      "wall_s": 11.26,
+      "breakdown": {
+        "queue_s": 0.01,
+        "create_container_s": 0.34,
+        "container_run_s": 10.4,
+        "finalize_s": 0.12,
+        "status_sync_s": 0.37
+      },
+      "sca": "D:\\thesis\\experiments\\results_v6\\E1_platform\\run_187\\Default-#0.sca"
+    },
+    {
+      "run_id": 188,
+      "status": "success",
+      "wall_s": 11.25,
+      "breakdown": {
+        "queue_s": 0.02,
+        "create_container_s": 0.34,
+        "container_run_s": 10.19,
+        "finalize_s": 0.12,
+        "status_sync_s": 0.59
+      },
+      "sca": "D:\\thesis\\experiments\\results_v6\\E1_platform\\run_188\\Default-#0.sca"
+    },
+    {
+      "run_id": 189,
+      "status": "success",
+      "wall_s": 11.26,
+      "breakdown": {
+        "queue_s": 0.02,
+        "create_container_s": 0.33,
+        "container_run_s": 10.0,
+        "finalize_s": 0.11,
+        "status_sync_s": 0.8
+      },
+      "sca": "D:\\thesis\\experiments\\results_v6\\E1_platform\\run_189\\Default-#0.sca"
+    },
+    {
+      "run_id": 190,
+      "status": "success",
+      "wall_s": 11.25,
+      "breakdown": {
+        "queue_s": 0.01,
+        "create_container_s": 0.44,
+        "container_run_s": 10.29,
+        "finalize_s": 0.12,
+        "status_sync_s": 0.39
+      },
+      "sca": "D:\\thesis\\experiments\\results_v6\\E1_platform\\run_190\\Default-#0.sca"
+    },
+    {
+      "run_id": 191,
+      "status": "success",
+      "wall_s": 11.29,
+      "breakdown": {
+        "queue_s": 0.01,
+        "create_container_s": 0.38,
+        "container_run_s": 10.61,
+        "finalize_s": 0.12,
+        "status_sync_s": 0.17
+      },
+      "sca": "D:\\thesis\\experiments\\results_v6\\E1_platform\\run_191\\Default-#0.sca"
+    },
+    {
+      "run_id": 192,
+      "status": "success",
+      "wall_s": 11.26,
+      "breakdown": {
+        "queue_s": 0.01,
+        "create_container_s": 0.35,
+        "container_run_s": 10.42,
+        "finalize_s": 0.12,
+        "status_sync_s": 0.35
+      },
+      "sca": "D:\\thesis\\experiments\\results_v6\\E1_platform\\run_192\\Default-#0.sca"
+    },
+    {
+      "run_id": 193,
+      "status": "success",
+      "wall_s": 11.25,
+      "breakdown": {
+        "queue_s": 0.01,
+        "create_container_s": 0.36,
+        "container_run_s": 10.31,
+        "finalize_s": 0.12,
+        "status_sync_s": 0.45
+      },
+      "sca": "D:\\thesis\\experiments\\results_v6\\E1_platform\\run_193\\Default-#0.sca"
+    },
+    {
+      "run_id": 194,
+      "status": "success",
+      "wall_s": 12.29,
+      "breakdown": {
+        "queue_s": 0.01,
+        "create_container_s": 0.4,
+        "container_run_s": 10.73,
+        "finalize_s": 0.12,
+        "status_sync_s": 1.03
+      },
+      "sca": "D:\\thesis\\experiments\\results_v6\\E1_platform\\run_194\\Default-#0.sca"
+    }
+  ]
+}

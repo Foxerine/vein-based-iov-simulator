@@ -1,0 +1,68 @@
+{
+  "timestamp": "2026-10-08T02:15:34",
+  "n": 5,
+  "vnc_ready_s": {
+    "mean": 7.74,
+    "sd": 0.09,
+    "min": 7.6,
+    "max": 7.8,
+    "n": 5
+  },
+  "page_load_ms": {
+    "mean": 466.4,
+    "sd": 17.04,
+    "min": 452.0,
+    "max": 494.0,
+    "n": 5
+  },
+  "ws_handshake_ms": {
+    "mean": 11.6,
+    "sd": 6.95,
+    "min": 8.0,
+    "max": 24.0,
+    "n": 5
+  },
+  "all_ok": true,
+  "runs": [
+    {
+      "run_id": 213,
+      "vnc_ready_s": 7.8,
+      "page_load_s": 0.453,
+      "page_ok": true,
+      "ws_handshake_s": 0.009,
+      "ws_ok": true
+    },
+    {
+      "run_id": 214,
+      "vnc_ready_s": 7.7,
+      "page_load_s": 0.494,
+      "page_ok": true,
+      "ws_handshake_s": 0.009,
+      "ws_ok": true
+    },
+    {
+      "run_id": 215,
+      "vnc_ready_s": 7.6,
+      "page_load_s": 0.452,
+      "page_ok": true,
+      "ws_handshake_s": 0.024,
+      "ws_ok": true
+    },
+    {
+      "run_id": 216,
+      "vnc_ready_s": 7.8,
+      "page_load_s": 0.469,
+      "page_ok": true,
+      "ws_handshake_s": 0.008,
+      "ws_ok": true
+    },
+    {
+      "run_id": 217,
+      "vnc_ready_s": 7.8,
+      "page_load_s": 0.464,
+      "page_ok": true,
+      "ws_handshake_s": 0.008,
+      "ws_ok": true
+    }
+  ]
+}

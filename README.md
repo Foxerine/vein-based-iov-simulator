@@ -235,6 +235,10 @@ celery -A worker.worker.celery_app worker --loglevel=info -Q analysis --pool=sol
 └── requirements_worker.txt # Celery Worker 依赖
 ```
 
+## 论文实验
+
+论文各项实验的驱动脚本、场景文件与处理后的结果数据在 [`paper/`](paper/README.md) 目录，原始结果文件见 GitHub Release `v1.0.0` 的附件。
+
 ## 致谢
 
 项目来自本科毕业设计，指导老师为 湖南农业大学 信息与智能科学技术学院 李博 老师。

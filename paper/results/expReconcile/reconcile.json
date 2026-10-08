@@ -1,0 +1,44 @@
+{
+  "R2_converges_without_polling": {
+    "run_id": 90,
+    "final_db_status": "success",
+    "seconds_to_success_in_db": 60,
+    "status_transitions": [
+      [
+        0,
+        "STARTING"
+      ],
+      [
+        25,
+        "RUNNING"
+      ],
+      [
+        60,
+        "SUCCESS"
+      ]
+    ]
+  },
+  "R1_worker_loss": {
+    "run_id": 91,
+    "container_before_kill": [
+      [
+        "veins-sim-u1-p51-r91-bff1dd09",
+        "running"
+      ]
+    ],
+    "final_status": "failed",
+    "seconds_kill_to_failed": 80.9,
+    "container_after_marked_failed": [
+      [
+        "veins-sim-u1-p51-r91-bff1dd09",
+        "running"
+      ]
+    ],
+    "seconds_restart_to_orphan_removed": 4.7,
+    "containers_left": "none",
+    "reconciler_log_note": [
+      "[2026-10-07T22:21:06.600274] 状态对账：执行该任务的 worker 已丢失，任务已标记为失败"
+    ],
+    "new_run_after_restart": "success"
+  }
+}

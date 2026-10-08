@@ -1,0 +1,722 @@
+[
+  {
+    "freq_hz": 1,
+    "vehicles": 50,
+    "vehicles_seen": {
+      "mean": 51,
+      "sd": 0.0,
+      "n": 3
+    },
+    "generatedBSMs": {
+      "mean": 7299.0,
+      "sd": 0.0,
+      "n": 3
+    },
+    "PDR_pct": {
+      "mean": 77.28685349411477,
+      "sd": 0.01644726894397751,
+      "n": 3
+    },
+    "channel_busy_pct": {
+      "mean": 0.11589719687849978,
+      "sd": 4.857543010988711e-05,
+      "n": 3
+    },
+    "collisions": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "n": 3
+    },
+    "receivers_per_bsm": {
+      "mean": 7.744850892816368,
+      "sd": 0.0009622919808970221,
+      "n": 3
+    },
+    "snir_lost": {
+      "mean": 16688.333333333332,
+      "sd": 12.858201014657274,
+      "n": 3
+    },
+    "runs": [
+      {
+        "seed": 0,
+        "vehicles_seen": 51,
+        "generatedBSMs": 7299.0,
+        "receivedBSMs": 56529.0,
+        "PDR": 0.7729246348800174,
+        "PDR_rxtx_only": 1.0,
+        "receivers_per_bsm": 7.744759556103576,
+        "snir_lost": 16683.0,
+        "channel_busy": 0.0011587991296710522,
+        "collisions": 0.0,
+        "RXTXLost": 0.0
+      },
+      {
+        "seed": 1,
+        "vehicles_seen": 51,
+        "generatedBSMs": 7299.0,
+        "receivedBSMs": 56537.0,
+        "PDR": 0.7729976182374958,
+        "PDR_rxtx_only": 1.0,
+        "receivers_per_bsm": 7.745855596657076,
+        "snir_lost": 16679.0,
+        "channel_busy": 0.0011595205054500222,
+        "collisions": 0.0,
+        "RXTXLost": 0.0
+      },
+      {
+        "seed": 2,
+        "vehicles_seen": 51,
+        "generatedBSMs": 7299.0,
+        "receivedBSMs": 56523.0,
+        "PDR": 0.7726833517059296,
+        "PDR_rxtx_only": 1.0,
+        "receivers_per_bsm": 7.743937525688451,
+        "snir_lost": 16703.0,
+        "channel_busy": 0.001158596271233919,
+        "collisions": 0.0,
+        "RXTXLost": 0.0
+      }
+    ]
+  },
+  {
+    "freq_hz": 1,
+    "vehicles": 300,
+    "vehicles_seen": {
+      "mean": 300,
+      "sd": 0.0,
+      "n": 3
+    },
+    "generatedBSMs": {
+      "mean": 43473.666666666664,
+      "sd": 2.516611478423583,
+      "n": 3
+    },
+    "PDR_pct": {
+      "mean": 70.91075277198982,
+      "sd": 0.39030160852631857,
+      "n": 3
+    },
+    "channel_busy_pct": {
+      "mean": 0.49718846158487806,
+      "sd": 0.004103547127965714,
+      "n": 3
+    },
+    "collisions": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "n": 3
+    },
+    "receivers_per_bsm": {
+      "mean": 32.91527879122322,
+      "sd": 0.3917972913589262,
+      "n": 3
+    },
+    "snir_lost": {
+      "mean": 588952.6666666666,
+      "sd": 4399.0227702676575,
+      "n": 3
+    },
+    "runs": [
+      {
+        "seed": 0,
+        "vehicles_seen": 300,
+        "generatedBSMs": 43471.0,
+        "receivedBSMs": 1412418.0,
+        "PDR": 0.70466125965585,
+        "PDR_rxtx_only": 1.0,
+        "receivers_per_bsm": 32.49104000368062,
+        "snir_lost": 593990.0,
+        "channel_busy": 0.0049305347595426895,
+        "collisions": 0.0,
+        "RXTXLost": 0.0
+      },
+      {
+        "seed": 1,
+        "vehicles_seen": 300,
+        "generatedBSMs": 43476.0,
+        "receivedBSMs": 1434330.0,
+        "PDR": 0.7106930413407115,
+        "PDR_rxtx_only": 1.0,
+        "receivers_per_bsm": 32.99130554788849,
+        "snir_lost": 585868.0,
+        "channel_busy": 0.004972520783043553,
+        "collisions": 0.0,
+        "RXTXLost": 0.0
+      },
+      {
+        "seed": 2,
+        "vehicles_seen": 300,
+        "generatedBSMs": 43474.0,
+        "receivedBSMs": 1446097.0,
+        "PDR": 0.7119682821631329,
+        "PDR_rxtx_only": 1.0,
+        "receivers_per_bsm": 33.263490822100565,
+        "snir_lost": 587000.0,
+        "channel_busy": 0.005012598304960099,
+        "collisions": 0.0,
+        "RXTXLost": 0.0
+      }
+    ]
+  },
+  {
+    "freq_hz": 1,
+    "vehicles": 600,
+    "vehicles_seen": {
+      "mean": 595.3333333333334,
+      "sd": 0.5773502691896257,
+      "n": 3
+    },
+    "generatedBSMs": {
+      "mean": 86238.33333333333,
+      "sd": 38.42308333974947,
+      "n": 3
+    },
+    "PDR_pct": {
+      "mean": 70.61273730771998,
+      "sd": 0.521398448496735,
+      "n": 3
+    },
+    "channel_busy_pct": {
+      "mean": 0.7188957930272435,
+      "sd": 0.007620496530175763,
+      "n": 3
+    },
+    "collisions": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "n": 3
+    },
+    "receivers_per_bsm": {
+      "mean": 48.852267689295395,
+      "sd": 0.09094495431734013,
+      "n": 3
+    },
+    "snir_lost": {
+      "mean": 1758828.6666666667,
+      "sd": 47716.68769239262,
+      "n": 3
+    },
+    "runs": [
+      {
+        "seed": 0,
+        "vehicles_seen": 595,
+        "generatedBSMs": 86248.0,
+        "receivedBSMs": 4222110.0,
+        "PDR": 0.7001098343755807,
+        "PDR_rxtx_only": 0.9999622213826974,
+        "receivers_per_bsm": 48.95313514516279,
+        "snir_lost": 1813908.0,
+        "channel_busy": 0.007276690382471649,
+        "collisions": 0.0,
+        "RXTXLost": 160.0
+      },
+      {
+        "seed": 1,
+        "vehicles_seen": 596,
+        "generatedBSMs": 86271.0,
+        "receivedBSMs": 4208000.0,
+        "PDR": 0.7089701448666806,
+        "PDR_rxtx_only": 0.9999592533218611,
+        "receivers_per_bsm": 48.776529772461195,
+        "snir_lost": 1732547.0,
+        "channel_busy": 0.007139221494638527,
+        "collisions": 0.0,
+        "RXTXLost": 172.0
+      },
+      {
+        "seed": 2,
+        "vehicles_seen": 595,
+        "generatedBSMs": 86196.0,
+        "receivedBSMs": 4208704.0,
+        "PDR": 0.7093021399893381,
+        "PDR_rxtx_only": 0.9999493132177865,
+        "receivers_per_bsm": 48.82713815026219,
+        "snir_lost": 1730031.0,
+        "channel_busy": 0.00715096191370713,
+        "collisions": 0.0,
+        "RXTXLost": 214.0
+      }
+    ]
+  },
+  {
+    "freq_hz": 5,
+    "vehicles": 50,
+    "vehicles_seen": {
+      "mean": 51,
+      "sd": 0.0,
+      "n": 3
+    },
+    "generatedBSMs": {
+      "mean": 36495.0,
+      "sd": 0.0,
+      "n": 3
+    },
+    "PDR_pct": {
+      "mean": 77.35171559812073,
+      "sd": 0.04300467927430085,
+      "n": 3
+    },
+    "channel_busy_pct": {
+      "mean": 0.573936361019099,
+      "sd": 0.00014711601593570903,
+      "n": 3
+    },
+    "collisions": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "n": 3
+    },
+    "receivers_per_bsm": {
+      "mean": 7.744887427501484,
+      "sd": 0.004311141220993232,
+      "n": 3
+    },
+    "snir_lost": {
+      "mean": 82834.66666666667,
+      "sd": 157.96940632075987,
+      "n": 3
+    },
+    "runs": [
+      {
+        "seed": 0,
+        "vehicles_seen": 51,
+        "generatedBSMs": 36495.0,
+        "receivedBSMs": 282742.0,
+        "PDR": 0.7737745975933527,
+        "PDR_rxtx_only": 1.0,
+        "receivers_per_bsm": 7.747417454445815,
+        "snir_lost": 82739.0,
+        "channel_busy": 0.005740743841475765,
+        "collisions": 0.0,
+        "RXTXLost": 0.0
+      },
+      {
+        "seed": 1,
+        "vehicles_seen": 51,
+        "generatedBSMs": 36495.0,
+        "receivedBSMs": 282739.0,
+        "PDR": 0.7737561757170941,
+        "PDR_rxtx_only": 1.0,
+        "receivers_per_bsm": 7.747335251404302,
+        "snir_lost": 82748.0,
+        "channel_busy": 0.005739531126996027,
+        "collisions": 0.0,
+        "RXTXLost": 0.0
+      },
+      {
+        "seed": 2,
+        "vehicles_seen": 51,
+        "generatedBSMs": 36495.0,
+        "receivedBSMs": 282468.0,
+        "PDR": 0.7730206946331754,
+        "PDR_rxtx_only": 1.0,
+        "receivers_per_bsm": 7.739909576654337,
+        "snir_lost": 83017.0,
+        "channel_busy": 0.005737815862101178,
+        "collisions": 0.0,
+        "RXTXLost": 0.0
+      }
+    ]
+  },
+  {
+    "freq_hz": 5,
+    "vehicles": 300,
+    "vehicles_seen": {
+      "mean": 300.3333333333333,
+      "sd": 0.5773502691896257,
+      "n": 3
+    },
+    "generatedBSMs": {
+      "mean": 217441.66666666666,
+      "sd": 124.23096769056149,
+      "n": 3
+    },
+    "PDR_pct": {
+      "mean": 69.62104977775161,
+      "sd": 0.5593005573985975,
+      "n": 3
+    },
+    "channel_busy_pct": {
+      "mean": 2.424879022393722,
+      "sd": 0.0392521542076651,
+      "n": 3
+    },
+    "collisions": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "n": 3
+    },
+    "receivers_per_bsm": {
+      "mean": 31.992935547888422,
+      "sd": 0.6930239807058366,
+      "n": 3
+    },
+    "snir_lost": {
+      "mean": 3036587.6666666665,
+      "sd": 42071.55490748272,
+      "n": 3
+    },
+    "runs": [
+      {
+        "seed": 0,
+        "vehicles_seen": 300,
+        "generatedBSMs": 217585.0,
+        "receivedBSMs": 6864588.0,
+        "PDR": 0.6961128489668057,
+        "PDR_rxtx_only": 0.9999400251399474,
+        "receivers_per_bsm": 31.54899464577062,
+        "snir_lost": 2998299.0,
+        "channel_busy": 0.023987928899973903,
+        "collisions": 0.0,
+        "RXTXLost": 412.0
+      },
+      {
+        "seed": 1,
+        "vehicles_seen": 301,
+        "generatedBSMs": 217365.0,
+        "receivedBSMs": 6877060.0,
+        "PDR": 0.6906669559678454,
+        "PDR_rxtx_only": 0.9999065762068632,
+        "receivers_per_bsm": 31.638304234812413,
+        "snir_lost": 3081626.0,
+        "channel_busy": 0.02405822760212729,
+        "collisions": 0.0,
+        "RXTXLost": 643.0
+      },
+      {
+        "seed": 2,
+        "vehicles_seen": 300,
+        "generatedBSMs": 217375.0,
+        "receivedBSMs": 7128054.0,
+        "PDR": 0.7018516883978972,
+        "PDR_rxtx_only": 0.9999841575274527,
+        "receivers_per_bsm": 32.79150776308223,
+        "snir_lost": 3029838.0,
+        "channel_busy": 0.024700214169710473,
+        "collisions": 0.0,
+        "RXTXLost": 113.0
+      }
+    ]
+  },
+  {
+    "freq_hz": 5,
+    "vehicles": 600,
+    "vehicles_seen": {
+      "mean": 599,
+      "sd": 2.6457513110645907,
+      "n": 3
+    },
+    "generatedBSMs": {
+      "mean": 431231.6666666667,
+      "sd": 71.82153808805081,
+      "n": 3
+    },
+    "PDR_pct": {
+      "mean": 69.4941837361685,
+      "sd": 0.46842723950093806,
+      "n": 3
+    },
+    "channel_busy_pct": {
+      "mean": 3.5058386358942957,
+      "sd": 0.0024408787607585825,
+      "n": 3
+    },
+    "collisions": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "n": 3
+    },
+    "receivers_per_bsm": {
+      "mean": 47.82399528323785,
+      "sd": 0.30154347041546237,
+      "n": 3
+    },
+    "snir_lost": {
+      "mean": 9056289.666666666,
+      "sd": 142377.7367790812,
+      "n": 3
+    },
+    "runs": [
+      {
+        "seed": 0,
+        "vehicles_seen": 597,
+        "generatedBSMs": 431285.0,
+        "receivedBSMs": 20684504.0,
+        "PDR": 0.6973766554163436,
+        "PDR_rxtx_only": 0.999868210351159,
+        "receivers_per_bsm": 47.960174826390904,
+        "snir_lost": 8978606.0,
+        "channel_busy": 0.035032505477816,
+        "collisions": 0.0,
+        "RXTXLost": 2728.0
+      },
+      {
+        "seed": 1,
+        "vehicles_seen": 602,
+        "generatedBSMs": 431150.0,
+        "receivedBSMs": 20470304.0,
+        "PDR": 0.6895415879535643,
+        "PDR_rxtx_only": 0.999909203494982,
+        "receivers_per_bsm": 47.4783810738722,
+        "snir_lost": 9220612.0,
+        "channel_busy": 0.035061661195203465,
+        "collisions": 0.0,
+        "RXTXLost": 1860.0
+      },
+      {
+        "seed": 2,
+        "vehicles_seen": 598,
+        "generatedBSMs": 431260.0,
+        "receivedBSMs": 20714897.0,
+        "PDR": 0.697907268715147,
+        "PDR_rxtx_only": 0.9998863475309194,
+        "receivers_per_bsm": 48.03342994945045,
+        "snir_lost": 8969651.0,
+        "channel_busy": 0.0350809924038094,
+        "collisions": 0.0,
+        "RXTXLost": 2356.0
+      }
+    ]
+  },
+  {
+    "freq_hz": 10,
+    "vehicles": 50,
+    "vehicles_seen": {
+      "mean": 51,
+      "sd": 0.0,
+      "n": 3
+    },
+    "generatedBSMs": {
+      "mean": 72990.0,
+      "sd": 0.0,
+      "n": 3
+    },
+    "PDR_pct": {
+      "mean": 76.66738305984481,
+      "sd": 0.611095508643482,
+      "n": 3
+    },
+    "channel_busy_pct": {
+      "mean": 1.1397151348164487,
+      "sd": 0.006894725297834236,
+      "n": 3
+    },
+    "collisions": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "n": 3
+    },
+    "receivers_per_bsm": {
+      "mean": 7.676371192400786,
+      "sd": 0.062223790528790394,
+      "n": 3
+    },
+    "snir_lost": {
+      "mean": 170356.0,
+      "sd": 4056.095536350198,
+      "n": 3
+    },
+    "runs": [
+      {
+        "seed": 0,
+        "vehicles_seen": 51,
+        "generatedBSMs": 72990.0,
+        "receivedBSMs": 555452.0,
+        "PDR": 0.7601196037101224,
+        "PDR_rxtx_only": 0.9986934705878124,
+        "receivers_per_bsm": 7.609973969036854,
+        "snir_lost": 174645.0,
+        "channel_busy": 0.011322240477608898,
+        "collisions": 0.0,
+        "RXTXLost": 727.0
+      },
+      {
+        "seed": 1,
+        "vehicles_seen": 51,
+        "generatedBSMs": 72990.0,
+        "receivedBSMs": 564457.0,
+        "PDR": 0.7722148686196862,
+        "PDR_rxtx_only": 1.0,
+        "receivers_per_bsm": 7.733347033840252,
+        "snir_lost": 166582.0,
+        "channel_busy": 0.011457951907081114,
+        "collisions": 0.0,
+        "RXTXLost": 0.0
+      },
+      {
+        "seed": 2,
+        "vehicles_seen": 51,
+        "generatedBSMs": 72990.0,
+        "receivedBSMs": 560986.0,
+        "PDR": 0.7676870194655355,
+        "PDR_rxtx_only": 1.0,
+        "receivers_per_bsm": 7.68579257432525,
+        "snir_lost": 169841.0,
+        "channel_busy": 0.011411261659803449,
+        "collisions": 0.0,
+        "RXTXLost": 0.0
+      }
+    ]
+  },
+  {
+    "freq_hz": 10,
+    "vehicles": 300,
+    "vehicles_seen": {
+      "mean": 300,
+      "sd": 0.0,
+      "n": 3
+    },
+    "generatedBSMs": {
+      "mean": 434736.6666666667,
+      "sd": 11.547005383792515,
+      "n": 3
+    },
+    "PDR_pct": {
+      "mean": 69.33798568703575,
+      "sd": 0.5720031181284089,
+      "n": 3
+    },
+    "channel_busy_pct": {
+      "mean": 4.864414781833173,
+      "sd": 0.04099513955947723,
+      "n": 3
+    },
+    "collisions": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "n": 3
+    },
+    "receivers_per_bsm": {
+      "mean": 32.2467763346783,
+      "sd": 0.4537166437131898,
+      "n": 3
+    },
+    "snir_lost": {
+      "mean": 6198390.666666667,
+      "sd": 84692.26200978064,
+      "n": 3
+    },
+    "runs": [
+      {
+        "seed": 0,
+        "vehicles_seen": 300,
+        "generatedBSMs": 434730.0,
+        "receivedBSMs": 13979695.0,
+        "PDR": 0.6907146656893393,
+        "PDR_rxtx_only": 0.9998371975033804,
+        "receivers_per_bsm": 32.15718951993191,
+        "snir_lost": 6259418.0,
+        "channel_busy": 0.04864538110779994,
+        "collisions": 0.0,
+        "RXTXLost": 2277.0
+      },
+      {
+        "seed": 1,
+        "vehicles_seen": 300,
+        "generatedBSMs": 434750.0,
+        "receivedBSMs": 14233108.0,
+        "PDR": 0.6999461245647847,
+        "PDR_rxtx_only": 0.9998731009739834,
+        "receivers_per_bsm": 32.73860379528465,
+        "snir_lost": 6101699.0,
+        "channel_busy": 0.04905348117786391,
+        "collisions": 0.0,
+        "RXTXLost": 1807.0
+      },
+      {
+        "seed": 2,
+        "vehicles_seen": 300,
+        "generatedBSMs": 434730.0,
+        "receivedBSMs": 13843775.0,
+        "PDR": 0.6894787803569487,
+        "PDR_rxtx_only": 0.9997925826007485,
+        "receivers_per_bsm": 31.844535688818347,
+        "snir_lost": 6234055.0,
+        "channel_busy": 0.04823358116933136,
+        "collisions": 0.0,
+        "RXTXLost": 2873.0
+      }
+    ]
+  },
+  {
+    "freq_hz": 10,
+    "vehicles": 600,
+    "vehicles_seen": {
+      "mean": 598,
+      "sd": 2.6457513110645907,
+      "n": 3
+    },
+    "generatedBSMs": {
+      "mean": 863383.3333333334,
+      "sd": 1083.1589603254608,
+      "n": 3
+    },
+    "PDR_pct": {
+      "mean": 67.50166460229562,
+      "sd": 0.270842188715691,
+      "n": 3
+    },
+    "channel_busy_pct": {
+      "mean": 6.905218770112231,
+      "sd": 0.06793829631034469,
+      "n": 3
+    },
+    "collisions": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "n": 3
+    },
+    "receivers_per_bsm": {
+      "mean": 46.68623926504662,
+      "sd": 0.2238225756893517,
+      "n": 3
+    },
+    "snir_lost": {
+      "mean": 19401228.0,
+      "sd": 307252.74432134855,
+      "n": 3
+    },
+    "runs": [
+      {
+        "seed": 0,
+        "vehicles_seen": 596,
+        "generatedBSMs": 862470.0,
+        "receivedBSMs": 40474280.0,
+        "PDR": 0.6719518147082532,
+        "PDR_rxtx_only": 0.9997183588682856,
+        "receivers_per_bsm": 46.92833373914455,
+        "snir_lost": 19754397.0,
+        "channel_busy": 0.06982927694402959,
+        "collisions": 0.0,
+        "RXTXLost": 11406.0
+      },
+      {
+        "seed": 1,
+        "vehicles_seen": 601,
+        "generatedBSMs": 863100.0,
+        "receivedBSMs": 40258044.0,
+        "PDR": 0.6770881867846595,
+        "PDR_rxtx_only": 0.9997433791982091,
+        "receivers_per_bsm": 46.64354535974974,
+        "snir_lost": 19195352.0,
+        "channel_busy": 0.06875670457532386,
+        "collisions": 0.0,
+        "RXTXLost": 10337.0
+      },
+      {
+        "seed": 2,
+        "vehicles_seen": 597,
+        "generatedBSMs": 864580.0,
+        "receivedBSMs": 40191591.0,
+        "PDR": 0.6760099365759558,
+        "PDR_rxtx_only": 0.9996386982764608,
+        "receivers_per_bsm": 46.48683869624558,
+        "snir_lost": 19253935.0,
+        "channel_busy": 0.06857058158401351,
+        "collisions": 0.0,
+        "RXTXLost": 14531.0
+      }
+    ]
+  }
+]

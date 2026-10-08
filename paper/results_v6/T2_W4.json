@@ -1,0 +1,69 @@
+{
+  "timestamp": "2026-10-08T08:00:54",
+  "workload": {
+    "id": "W4",
+    "desc": "多入口随机行程 600 辆，5 Hz 信标，200 s",
+    "scen": "D:\\thesis\\experiments\\sweep_scenarios\\f5_n600",
+    "config": "WithBeaconing"
+  },
+  "serial_total_s": 9532.2,
+  "serial_runs": [
+    {
+      "seed": 0,
+      "returncode": 0,
+      "wall_s": 1974.36,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2_W4_s0\\results\\WithBeaconing-#0.sca"
+    },
+    {
+      "seed": 1,
+      "returncode": 0,
+      "wall_s": 1885.17,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2_W4_s1\\results\\WithBeaconing-#0.sca"
+    },
+    {
+      "seed": 2,
+      "returncode": 0,
+      "wall_s": 1862.78,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2_W4_s2\\results\\WithBeaconing-#0.sca"
+    },
+    {
+      "seed": 3,
+      "returncode": 0,
+      "wall_s": 1860.15,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2_W4_s3\\results\\WithBeaconing-#0.sca"
+    },
+    {
+      "seed": 4,
+      "returncode": 0,
+      "wall_s": 1949.69,
+      "sca": "D:\\thesis\\experiments\\cli_work_v6\\t2_W4_s4\\results\\WithBeaconing-#0.sca"
+    }
+  ],
+  "serial_single_mean_s": 1906.43,
+  "parallel_total_s": 3051.0,
+  "parallel_success": 5,
+  "parallel_container_run_s": [
+    3049.87,
+    2942.07,
+    2912.39,
+    2929.22,
+    3044.5
+  ],
+  "speedup": 3.12,
+  "contention_factor": 1.56,
+  "cpu_base_mhz": 2201,
+  "cpu_perf_pct_serial": {
+    "mean": 193.88,
+    "sd": 2.53,
+    "min": 173.72,
+    "max": 198.3,
+    "n": 4719
+  },
+  "cpu_perf_pct_parallel": {
+    "mean": 187.3,
+    "sd": 1.0,
+    "min": 186.18,
+    "max": 194.56,
+    "n": 1512
+  }
+}
