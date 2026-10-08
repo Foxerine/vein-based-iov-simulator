@@ -260,6 +260,12 @@ cd ${OPP_ENV_DIR}
 SIM_EXIT_FILE=/tmp/sim_exit_code
 echo 1 > $SIM_EXIT_FILE
 
+# 同一项目的多次运行可能同时进行，且共用挂载进来的项目目录；若都在其中编译，
+# Makefile、out/ 与可执行文件链接会被并发改写，偶发编译失败。因此把项目
+# （不含各次运行的结果目录与旧的编译产物）复制到容器内的私有目录再编译；
+# 仿真仍在项目目录中运行，结果目录等相对路径的含义不变。
+BUILD_DIR=/tmp/project_build
+
 # 使用here-document将命令传递给opp_env shell
 opp_env shell ${VEINS_VERSION} << EOF
 echo ">>> 进入opp_env shell环境"
@@ -281,7 +287,13 @@ echo ">>> 目录内容:"
 ls -la
 
 if [ -f "package.ned" ] || [ -f "omnetpp.ini" ]; then
-    echo ">>> 编译项目..."
+    echo ">>> 编译项目（在私有副本 ${BUILD_DIR} 中）..."
+    rm -rf ${BUILD_DIR} && mkdir -p ${BUILD_DIR}
+    if ! tar -C ${PROJECT_DIR} --exclude=./runs --exclude=./results --exclude=./out -cf - . | tar -C ${BUILD_DIR} -xf -; then
+        echo "错误: 复制项目失败"
+        exit 1
+    fi
+    cd ${BUILD_DIR}
     opp_makemake -f --deep
     if make MODE=release -j\$(nproc); then
         echo ">>> 项目编译完成"
@@ -289,6 +301,7 @@ if [ -f "package.ned" ] || [ -f "omnetpp.ini" ]; then
         echo "错误: 项目编译失败"
         exit 1
     fi
+    cd ${PROJECT_DIR}
 else
     echo ">>> 未找到package.ned或omnetpp.ini文件，跳过编译"
 fi
