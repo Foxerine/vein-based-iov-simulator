@@ -3,6 +3,12 @@ from charset_normalizer import from_bytes
 from loguru import logger
 import toml
 
+def redact_url_credentials(value: str) -> str:
+    """把 URL 中的用户名/密码（如 redis://:password@host）替换为 ***，用于日志输出。"""
+    import re
+    return re.sub(r"^([A-Za-z][A-Za-z0-9+.-]*://)[^@/]+@", r"\1***@", value)
+
+
 class Config(SQLModel):
     admin_email: str
     """默认管理员用户"""
@@ -41,7 +47,27 @@ class Config(SQLModel):
     """最大允许仿真运行的时间，默认是 4 小时 """
 
     max_concurrent_simulations: int = 5
-    """一次最多可以同时运行的仿真数量，建议少于CPU核心数"""
+    """单个 worker 同时运行的仿真数量上限（即 Celery worker_concurrency），建议少于CPU核心数"""
+
+    worker_pool: str = "threads"
+    """Celery worker 池类型。仿真任务主要在等待容器，且 Windows 原生不支持 prefork，默认 threads"""
+
+    container_cpu_limit: float = 2.0
+    """每个仿真容器可用的 CPU 核数上限（opp_run 与 SUMO 各占一个线程），0 表示不限制"""
+
+    container_memory_limit: str = "4g"
+    """每个仿真容器的内存上限（同时作为内存+swap 上限，禁止额外使用 swap），空字符串表示不限制"""
+
+    container_pids_limit: int = 1024
+    """每个仿真容器的最大进程/线程数，防止 fork 炸弹，0 表示不限制"""
+
+    container_isolate_network: bool = True
+    """无头仿真容器不接入任何网络（OMNeT++ 与 SUMO 只经容器内回环地址通信），
+    使用户上传并在容器内编译运行的代码无法访问 Redis、后端或其他用户的会话。
+    GUI 任务需要对外发布 noVNC 端口，不受此项影响"""
+
+    reconcile_interval_s: int = 30
+    """后台状态对账的扫描间隔（秒），0 表示关闭"""
 
     celery_broker_url: str = "redis://localhost:6379"
     celery_result_backend: str = "redis://localhost:6379"
@@ -57,6 +83,9 @@ class Config(SQLModel):
                     for _k in ("admin_password", "jwt_secret"):
                         if _safe.get(_k):
                             _safe[_k] = "***REDACTED***"
+                    for _k, _v in _safe.items():
+                        if isinstance(_v, str):
+                            _safe[_k] = redact_url_credentials(_v)
                     logger.info(f"已载入配置文件：{_safe}")
                     return _config
                 else:

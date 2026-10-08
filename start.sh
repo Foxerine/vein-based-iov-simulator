@@ -17,8 +17,11 @@ echo "已删除临时镜像文件"
 # 启动Redis服务
 redis-server --daemonize yes
 
-# 启动Worker
+# 启动仿真 Worker（池类型与并发数取自 config.cfg 的 worker_pool / max_concurrent_simulations）
 /app/worker_venv/bin/celery -A worker.worker.celery_app worker --loglevel=info -n veins-worker@%h &
+
+# 启动结果分析 Worker（专用进程，只消费 analysis 队列）
+/app/worker_venv/bin/celery -A worker.worker.celery_app worker --loglevel=info -Q analysis --pool=solo -n veins-analysis@%h &
 
 # 启动FastAPI应用
 /app/backend_venv/bin/uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}

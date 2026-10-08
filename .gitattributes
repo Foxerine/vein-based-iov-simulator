@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Shell scripts are copied into Linux images and must keep LF line endings on Windows checkouts
+*.sh text eol=lf

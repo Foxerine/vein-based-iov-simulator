@@ -15,9 +15,9 @@ from utils.auth import get_password_hash
 from utils.depends import AdminUserDep, SessionDep, TableViewRequestDep, ProjectUpdateRequestDep, AdminUserDepAnnotated
 from utils.files import ensure_file_path_valid, create_zip_archive
 
-router = APIRouter(prefix="/admin", tags=["管理员"], dependencies=[AdminUserDep])
+router = APIRouter(prefix="/admin", tags=["Admin"], dependencies=[AdminUserDep])
 
-admin_user_router = APIRouter(prefix="/user", tags=["用户管理"])
+admin_user_router = APIRouter(prefix="/user", tags=["User management"])
 
 @admin_user_router.get("", response_model=list[UserInfoResponse])
 async def read_user_admin(session: SessionDep, table_view_args: TableViewRequestDep):
@@ -67,7 +67,7 @@ async def list_runs_by_user_admin(
         session: SessionDep,
         table_view_args: TableViewRequestDep
 ):
-    """获取指定用户的所有仿真运行（管理员）"""
+    """List all simulation runs of a given user (admin)."""
     # 首先验证用户是否存在
     user = await User.get_exist_one(session, user_id)
 
@@ -104,7 +104,7 @@ async def list_projects_by_user_admin(
         session: SessionDep,
         table_view_args: TableViewRequestDep
 ):
-    """获取指定用户的项目列表（管理员）"""
+    """List the projects of a given user (admin)."""
     # 首先验证用户是否存在
     user = await User.get_exist_one(session, user_id)
 
@@ -122,11 +122,11 @@ async def list_projects_by_user_admin(
 router.include_router(admin_user_router)
 
 # 项目管理部分
-admin_project_router = APIRouter(prefix="/project", tags=["项目管理"])
+admin_project_router = APIRouter(prefix="/project", tags=["Project management"])
 
 @admin_project_router.get("", response_model=list[ProjectInfoResponse])
 async def list_projects_admin(session: SessionDep, table_view_args: TableViewRequestDep):
-    """获取所有项目列表（管理员）"""
+    """List all projects (admin)."""
     projects = await Project.get(
         session,
         None,  # 不设条件，获取所有项目
@@ -140,7 +140,7 @@ async def list_projects_admin(session: SessionDep, table_view_args: TableViewReq
 
 @admin_project_router.get("/{id}", response_model=ProjectInfoResponse)
 async def get_project_admin(id: int, session: SessionDep):
-    """获取特定项目的详情（管理员）"""
+    """Get the details of a project (admin)."""
     project = await Project.get_exist_one(session=session, id=id)
     return await ProjectInfoResponse.from_project(project)
 
@@ -151,21 +151,21 @@ async def update_project_admin(
         session: SessionDep,
         files: ProjectFileType | None = None,
 ):
-    """更新项目（管理员）"""
+    """Update a project (admin)."""
     project = await Project.get_exist_one(session=session, id=id)
     await project.update(session, update_data, files=files)
     return await ProjectInfoResponse.from_project(project)
 
 @admin_project_router.delete("/{id}", response_model=Literal[True])
 async def delete_project_admin(id: int, session: SessionDep):
-    """删除项目（管理员）"""
+    """Delete a project (admin)."""
     project = await Project.get_exist_one(session=session, id=id)
     await Project.delete(session, project)
     return True
 
 @admin_project_router.delete("/{id}/files/{file_name}", response_model=ProjectInfoResponse)
 async def delete_file_admin(id: int, file_name: str, session: SessionDep):
-    """删除项目中的文件（管理员）"""
+    """Delete a file from a project (admin)."""
     project = await Project.get_exist_one(session=session, id=id)
     try:
         await project.remove_one_file(file_name)
@@ -183,7 +183,7 @@ async def delete_file_admin(id: int, file_name: str, session: SessionDep):
 
 @admin_project_router.get("/{id}/files", response_class=FileResponse)
 async def download_project_zip_admin(id: int, session: SessionDep):
-    """将项目文件打包成zip下载（管理员）"""
+    """Download the project files as a ZIP archive (admin)."""
     # 获取项目
     project = await Project.get_exist_one(session=session, id=id)
 
@@ -213,7 +213,7 @@ async def list_runs_by_project_admin(
         session: SessionDep,
         table_view_args: TableViewRequestDep
 ):
-    """获取指定项目的所有仿真运行（管理员）"""
+    """List all simulation runs of a given project (admin)."""
     # 首先验证项目是否存在
     project = await Project.get_exist_one(session, project_id)
 
@@ -236,11 +236,11 @@ async def list_runs_by_project_admin(
 router.include_router(admin_project_router)
 
 # 仿真运行管理部分
-admin_run_router = APIRouter(prefix="/run", tags=["运行管理"])
+admin_run_router = APIRouter(prefix="/run", tags=["Run management"])
 
 @admin_run_router.get("", response_model=list[RunInfoResponse])
 async def list_runs_admin(session: SessionDep, table_view_args: TableViewRequestDep):
-    """获取所有仿真运行列表（管理员）"""
+    """List all simulation runs (admin)."""
     runs = await Run.get(
         session,
         None,  # 不设条件，获取所有运行
@@ -271,14 +271,14 @@ async def list_runs_admin(session: SessionDep, table_view_args: TableViewRequest
 
 @admin_run_router.get("/{id}", response_model=RunInfoResponse)
 async def get_run_admin(id: int, session: SessionDep):
-    """获取特定仿真运行的详情（管理员）"""
+    """Get the details of a simulation run (admin)."""
     run = await Run.get_exist_one(session, id, load=Run.project)
     await run.get_status(session)
     return await RunInfoResponse.from_run(run)
 
 @admin_run_router.post("/{id}/execute", response_model=RunInfoResponse)
 async def execute_run_admin(id: int, session: SessionDep):
-    """执行仿真（管理员）"""
+    """Execute a simulation run (admin)."""
     # 获取Run（需要加载project关系）
     run = await Run.get_exist_one(session, id, load=Run.project)
 
@@ -293,7 +293,7 @@ async def execute_run_admin(id: int, session: SessionDep):
 
 @admin_run_router.post("/{id}/cancel", response_model=RunInfoResponse)
 async def cancel_run_admin(id: int, session: SessionDep):
-    """取消运行中的仿真（管理员）"""
+    """Cancel a running simulation (admin)."""
     # 获取Run
     run = await Run.get_exist_one(session, id, load=Run.project)
 
@@ -310,14 +310,14 @@ async def cancel_run_admin(id: int, session: SessionDep):
 
 @admin_run_router.delete("/{id}", response_model=Literal[True])
 async def delete_run_admin(id: int, session: SessionDep):
-    """删除仿真运行（管理员）"""
+    """Delete a simulation run (admin)."""
     run = await Run.get_exist_one(session, id)
     await Run.delete(session, run)
     return True
 
 @admin_run_router.get("/{run_id}/files/{file_name}", response_class=FileResponse)
 async def get_run_file_admin(run_id: int, file_name: str, session: SessionDep):
-    """下载仿真结果文件（管理员）"""
+    """Download a simulation result file (admin)."""
     # 获取Run
     run = await Run.get_exist_one(session, run_id, load=Run.project)
 
@@ -325,7 +325,7 @@ async def get_run_file_admin(run_id: int, file_name: str, session: SessionDep):
 
 @admin_run_router.get("/{run_id}/files", response_class=FileResponse)
 async def download_run_results_zip_admin(run_id: int, session: SessionDep):
-    """将运行结果打包成zip下载（管理员）"""
+    """Download the run results as a ZIP archive (admin)."""
     # 获取Run
     run = await Run.get_exist_one(session, run_id, load=Run.project)
 

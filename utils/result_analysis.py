@@ -20,6 +20,11 @@ def parse_sca(path: str) -> list[tuple[str, str, float]]:
     return scalars
 
 
+ANALYSIS_VERSION = 2
+"""分析结果的格式/口径版本。v2 起帧接收成功率扣除全部丢失帧（v1 只扣除收发冲突，偏高）；
+API 遇到旧版本的缓存会重新计算。"""
+
+
 def summarize_sca(scalars: list[tuple[str, str, float]]) -> dict:
     """聚合出论文关注的核心指标"""
     agg = defaultdict(float)
@@ -28,7 +33,8 @@ def summarize_sca(scalars: list[tuple[str, str, float]]) -> dict:
         agg[name] += val
         counts[name] += 1
     received = agg.get("ReceivedBroadcasts", 0.0)
-    lost = agg.get("RXTXLostPackets", 0.0)
+    # 丢失帧包括干扰/碰撞导致的信噪比不足（SNIRLost）与收发冲突（RXTXLost），TotalLostPackets 为两者之和
+    lost = agg.get("TotalLostPackets", 0.0)
     busy_mean = (agg.get("channelBusy:timeavg", 0.0) / counts["channelBusy:timeavg"]
                  if counts.get("channelBusy:timeavg") else 0.0)
     return {
@@ -137,6 +143,7 @@ def analyze_run_dir(run_dir: str) -> dict:
         raise FileNotFoundError("结果目录中没有 .sca 标量文件（仿真可能未成功完成）")
     scalars = parse_sca(sca)
     result = {
+        "version": ANALYSIS_VERSION,
         "summary": summarize_sca(scalars),
         "modules": per_module_table(scalars),
         "timeseries": timeseries_from_vec(vec) if vec else None,

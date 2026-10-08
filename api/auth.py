@@ -8,11 +8,11 @@ from models.user import User, UserRegisterRequest, UserLoginRequest
 from models.token import TokenResponse
 from utils.auth import verify_password, get_password_hash, create_access_token
 
-router = APIRouter(prefix="/auth", tags=["认证"])
+router = APIRouter(prefix="/auth", tags=["Auth"])
 
 @router.post("/register", response_model=TokenResponse)
 async def register(user: UserRegisterRequest, session: SessionDep):
-    """用户注册"""
+    """Register a new user."""
     # 检查邮箱是否已存在
     db_user = await User.get(session, User.email == user.email)
     if db_user:
@@ -30,7 +30,7 @@ async def register(user: UserRegisterRequest, session: SessionDep):
 
 @router.post("/login", response_model=TokenResponse)
 async def login(user: UserLoginRequest, session: SessionDep):
-    """用户登录"""
+    """Log in with email and password."""
     # 验证用户
     db_user = await User.get(session, User.email==user.email)
     if not db_user or not verify_password(user.password, db_user.hashed_password):
@@ -46,7 +46,7 @@ async def login(user: UserLoginRequest, session: SessionDep):
 
 @router.post("/oauth2", response_model=TokenResponse)
 async def get_token(form: Annotated[OAuth2PasswordRequestForm, Depends()], session: SessionDep):
-    """token产生"""
+    """Issue an access token (OAuth2 password flow)."""
     # 验证用户
     db_user = await User.get(session, User.email==form.username)
     if not db_user or not verify_password(form.password, db_user.hashed_password):

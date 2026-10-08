@@ -13,9 +13,10 @@ from utils.depends import CurrentActiveUserDep, SessionDep
 from fastapi.responses import FileResponse
 
 from utils.files import ensure_file_path_valid, create_zip_archive
+from utils.result_analysis import ANALYSIS_VERSION
 from worker.worker import celery_app
 
-router = APIRouter(prefix="/run", tags=["仿真运行"])
+router = APIRouter(prefix="/run", tags=["Run"])
 
 @router.post("", response_model=RunInfoResponse)
 async def create_run(
@@ -23,7 +24,7 @@ async def create_run(
         session: SessionDep,
         current_user: CurrentActiveUserDep,
 ):
-    """创建新的仿真运行"""
+    """Create a new simulation run."""
     # 获取项目
     project = await Project.get_exist_one(session, run_data.project_id, user_id=current_user.id)
 
@@ -39,7 +40,7 @@ async def execute_run(
         session: SessionDep,
         current_user: CurrentActiveUserDep
 ):
-    """开始执行仿真"""
+    """Start executing a simulation run."""
     # 获取Run
     run = await Run.get_exist_one(session, id, user_id=current_user.id, load=Run.project)
 
@@ -58,7 +59,7 @@ async def get_run(
         session: SessionDep,
         current_user: CurrentActiveUserDep
 ):
-    """获取仿真详情和状态"""
+    """Get the details and status of a simulation run."""
     # 获取Run
     run = await Run.get_exist_one(session, run_id, current_user.id, load=Run.project)
 
@@ -73,7 +74,7 @@ async def cancel_run(
         session: SessionDep,
         current_user: CurrentActiveUserDep
 ):
-    """取消运行中的仿真"""
+    """Cancel a running simulation."""
     # 获取Run
     run = await Run.get_exist_one(session, run_id, current_user.id, load=Run.project)
 
@@ -96,10 +97,10 @@ async def analyze_run(
         session: SessionDep,
         current_user: CurrentActiveUserDep
 ):
-    """解析仿真结果（.sca/.vec），返回汇总指标、逐节点统计与时序数据。
+    """Parse the simulation results (.sca/.vec) and return summary metrics, per-node statistics, and time series.
 
-    解析为CPU密集操作，交由专用 analysis 队列的独立进程worker执行，
-    避免大结果文件在API进程内解析卡死事件循环；结果缓存为 analysis.json。
+    Parsing is CPU-intensive, so it runs in a dedicated process worker on the analysis queue; this keeps large
+    result files from blocking the API event loop. The result is cached as analysis.json.
     """
     run = await Run.get_exist_one(session, run_id, current_user.id, load=Run.project)
 
@@ -109,11 +110,13 @@ async def analyze_run(
             detail=f"任务状态为 {run.status}，只有成功完成的任务才能分析结果"
         )
 
-    # 缓存命中则直接返回（结果文件在任务成功后不可变）
+    # 缓存命中则直接返回（结果文件在任务成功后不可变）；分析口径升级后旧缓存作废
     cache_path = sync_os.path.join(run.dir, "analysis.json")
     if await os.path.exists(cache_path):
         async with aiofiles.open(cache_path, encoding="utf-8") as f:
-            return json.loads(await f.read())
+            cached = json.loads(await f.read())
+        if cached.get("version") == ANALYSIS_VERSION:
+            return cached
 
     task = celery_app.send_task("veins_simulation.analyze", args=[run.dir], queue="analysis")
     elapsed = 0.0
@@ -148,7 +151,7 @@ async def get_run_file(
         session: SessionDep,
         current_user: CurrentActiveUserDep
 ):
-    """下载仿真结果文件"""
+    """Download a simulation result file."""
     # 获取Run
     run = await Run.get_exist_one(session, run_id, current_user.id, load=Run.project)
 
@@ -160,7 +163,7 @@ async def download_run_results_zip(
         session: SessionDep,
         current_user: CurrentActiveUserDep
 ):
-    """将运行结果打包成zip下载"""
+    """Download the run results as a ZIP archive."""
     # 获取Run并验证权限
     run = await Run.get_exist_one(session, run_id, current_user.id, load=Run.project)
 

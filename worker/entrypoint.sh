@@ -254,6 +254,12 @@ done
 echo ">>> 进入opp_env环境..."
 cd ${OPP_ENV_DIR}
 
+# opp_env shell 不会把内层 shell 的退出码传出来（总是返回 0），
+# 因此由内层把仿真退出码写入文件，外层读回后再退出；默认记为失败，
+# 内层若在编译等阶段提前退出也不会被误判为成功。
+SIM_EXIT_FILE=/tmp/sim_exit_code
+echo 1 > $SIM_EXIT_FILE
+
 # 使用here-document将命令传递给opp_env shell
 opp_env shell ${VEINS_VERSION} << EOF
 echo ">>> 进入opp_env shell环境"
@@ -304,8 +310,9 @@ else
     echo ">>> 仿真失败，退出代码: \$SIM_EXIT_CODE"
 fi
 
+echo \$SIM_EXIT_CODE > $SIM_EXIT_FILE
 exit \$SIM_EXIT_CODE
 EOF
 
-SIM_EXIT_CODE=$?
+SIM_EXIT_CODE=$(cat $SIM_EXIT_FILE 2>/dev/null || echo 1)
 exit $SIM_EXIT_CODE

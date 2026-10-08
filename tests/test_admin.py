@@ -633,8 +633,9 @@ async def test_execute_run_admin(mock_send_task, mock_prepare, client, admin_use
     assert repeat_response.status_code == status.HTTP_400_BAD_REQUEST
 
 @pytest.mark.asyncio
+@patch('worker.worker.celery_app.control.broadcast')
 @patch('worker.worker.celery_app.control.revoke')
-async def test_cancel_run_admin(mock_revoke, client, session, admin_user_token, normal_user_token, setup_project_dir):
+async def test_cancel_run_admin(mock_revoke, mock_broadcast, client, session, admin_user_token, normal_user_token, setup_project_dir):
     """测试管理员取消运行中的仿真"""
     # 创建项目
     project = client.post(

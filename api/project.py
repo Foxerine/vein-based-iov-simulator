@@ -15,7 +15,7 @@ from utils.depends import CurrentActiveUserDep, SessionDep, ProjectCreateRequest
 from utils.files import ensure_file_path_valid, create_zip_archive
 from fastapi.responses import FileResponse
 
-router = APIRouter(prefix="/project", tags=["项目"])
+router = APIRouter(prefix="/project", tags=["Project"])
 
 @router.post("", response_model=ProjectInfoResponse)
 async def create_project(
@@ -49,7 +49,7 @@ async def list_projects(
         current_user: CurrentActiveUserDep,
         table_view_args: TableViewRequestDep
 ):
-    """获取当前用户的项目列表"""
+    """List the current user's projects."""
     projects = await Project.get(
         session,
         Project.user_id == current_user.id,
@@ -68,7 +68,7 @@ async def get_project(
         session: SessionDep,
         current_user: CurrentActiveUserDep
 ):
-    """获取特定项目的详情"""
+    """Get the details of a project."""
     project = await Project.get_exist_one(session=session, id=id, user_id=current_user.id)
 
     return await ProjectInfoResponse.from_project(project)
@@ -81,7 +81,7 @@ async def update_project(
         current_user: CurrentActiveUserDep,
         files: ProjectFileType | None = None,
 ):
-    """更新项目"""
+    """Update a project."""
     project = await Project.get_exist_one(session=session, id=id, user_id=current_user.id)
     await project.update(session, update_data, files=files)
 
@@ -93,7 +93,7 @@ async def delete_project(
         session: SessionDep,
         current_user: CurrentActiveUserDep
 ):
-    """删除项目"""
+    """Delete a project."""
     project = await Project.get_exist_one(session=session, id=id, user_id=current_user.id)
     await Project.delete(session, project)
 
@@ -106,7 +106,7 @@ async def delete_file(
         session: SessionDep,
         current_user: CurrentActiveUserDep
 ):
-    """删除项目中的文件"""
+    """Delete a file from a project."""
     project = await Project.get_exist_one(session=session, id=id, user_id=current_user.id)
     try:
         await project.remove_one_file(file_name)
@@ -131,7 +131,7 @@ async def list_runs(
         current_user: CurrentActiveUserDep,
         table_view_args: TableViewRequestDep
 ):
-    """获取项目的所有仿真运行"""
+    """List all simulation runs of a project."""
     # 获取项目
     project = await Project.get_exist_one(session, project_id, user_id=current_user.id)
 
@@ -169,7 +169,7 @@ async def download_file(
         session: SessionDep,
         current_user: CurrentActiveUserDep
 ):
-    """下载项目中的文件"""
+    """Download a file from a project."""
     # 获取项目并验证权限
     project = await Project.get_exist_one(session=session, id=id, user_id=current_user.id)
 
@@ -185,7 +185,7 @@ async def download_project_zip(
         session: SessionDep,
         current_user: CurrentActiveUserDep
 ):
-    """将项目文件打包成zip下载"""
+    """Download the project files as a ZIP archive."""
     # 获取项目并验证权限
     project = await Project.get_exist_one(session=session, id=id, user_id=current_user.id)
 

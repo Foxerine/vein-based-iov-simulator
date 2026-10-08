@@ -6,7 +6,7 @@ from models.user import UserInfoResponse, UserUpdateRequest, User
 from utils.auth import get_password_hash
 from utils.depends import CurrentActiveUserDep, SessionDep
 
-router = APIRouter(prefix="/user", tags=["用户"])
+router = APIRouter(prefix="/user", tags=["User"])
 
 @router.get("", response_model=UserInfoResponse)
 async def read_user(current_user: CurrentActiveUserDep):

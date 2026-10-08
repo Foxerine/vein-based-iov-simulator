@@ -139,8 +139,8 @@ async def test_prepare_execution(mock_makedirs, mock_exists, mock_rmtree, sessio
 
     # 验证调用
     assert mock_makedirs.call_count >= 1
-    assert mock_exists.call_count == 2
-    assert mock_rmtree.call_count == 2
+    assert mock_exists.call_count == 1
+    assert mock_rmtree.call_count == 1
 
 @pytest.mark.asyncio
 async def test_get_status_no_task_id(session):

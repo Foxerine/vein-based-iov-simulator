@@ -13,7 +13,7 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 from config import config
 from utils.files import list_result_files
-from utils.auth import generate_vnc_uuid
+from utils.auth import generate_vnc_token
 from worker.worker import celery_app
 from .project import Project
 from .table_base import TableBase
@@ -34,14 +34,14 @@ class RunBase(SQLModel):
     project_id: int = Field(foreign_key="project.id", index=True, ondelete="CASCADE")
     use_gui: bool = Field(default=False)
     seed_set: int = Field(default=0, ge=0, le=9999,
-                          description="OMNeT++ seed-set 编号，用于不同随机种子的参数扫描")
+                          description="OMNeT++ seed-set number, for parameter sweeps over random seeds")
 
 class Run(RunBase, TableBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
 
     status: RunStatus = Field(
         default=RunStatus.PENDING,
-        description="仿真运行状态"
+        description="Simulation run status"
     )
     task_id: str | None = Field(default=None)
 
@@ -52,7 +52,6 @@ class Run(RunBase, TableBase, table=True):
 
     def __init__(self, **data: Any):
         self._dir = None
-        self._uuid = None
         super().__init__(**data)
 
     @classmethod
@@ -100,25 +99,14 @@ class Run(RunBase, TableBase, table=True):
             self._dir = sync_os.path.normpath(path)
         return self._dir
 
-    async def uuid(self) -> str:
-        """获取run uuid"""
-        if not self.__dict__.get('_uuid'):
-            #todo 似乎与pydantic冲突 不知道有没有更优雅的解法
-            self._uuid = generate_vnc_uuid(self.project.user_id, self.project.id, self.id)
-        return self._uuid
-
     async def _prepare_execution(self) -> None:
         """准备执行环境"""
         # 确保目录存在
         await os.makedirs(sync_os.path.dirname(self.dir), exist_ok=True)
 
-        # 清除旧的run文件夹和项目results目录
-        results_dir = sync_os.path.join(self.project.dir, "results")
-
+        # 清除旧的run文件夹（仿真结果由 worker 通过 --result-dir 直接写入运行目录）
         if await os.path.exists(self.dir):
             await aioshutil.rmtree(self.dir)
-        if await os.path.exists(results_dir):
-            await aioshutil.rmtree(results_dir)
 
         # 创建新的run目录
         await os.makedirs(self.dir, exist_ok=True)
@@ -145,10 +133,9 @@ class Run(RunBase, TableBase, table=True):
             self.project.veins_config_name  # config_name
         ]
 
-        # GUI模式需要传入UUID
+        # GUI模式：每次执行生成新的随机会话令牌，只随任务参数下发，不落库
         if self.use_gui:
-            vnc_uuid = await self.uuid()
-            task_args.extend([True, vnc_uuid])  # gui_mode=True, vnc_uuid
+            task_args.extend([True, generate_vnc_token()])  # gui_mode=True, vnc_uuid
         else:
             task_args.append(False)  # gui_mode=False
 
@@ -234,24 +221,23 @@ class Run(RunBase, TableBase, table=True):
         self.status = RunStatus.CANCELLING
         await self.save(session)
 
-        # 发送停止任务
-        stop_task = celery_app.send_task(
-            'veins_simulation.stop',
-            args=[self.task_id]
-        )
-
-        # 等待停止任务完成（可选，或者异步处理）
+        # 尚未开始的任务：撤销后 worker 收到时直接丢弃
+        # 正在运行的任务：通过远程控制命令立即停止其容器（不经过任务队列，见 worker.stop_sim_containers）
         try:
-            stop_result = stop_task.get(timeout=30)
-            if isinstance(stop_result, dict) and stop_result.get('status') == RunStatus.CANCELLED:
-                self.status = RunStatus.CANCELLED
-                self.end_time = datetime.now()
-                await self.save(session)
-        except Exception as e:
-            # 如果停止任务失败，仍然标记为已取消
-            self.status = RunStatus.CANCELLED
-            self.end_time = datetime.now()
-            await self.save(session)
+            celery_app.control.revoke(self.task_id)
+            celery_app.control.broadcast(
+                "stop_sim_containers",
+                arguments={"task_id": self.task_id},
+                reply=True,
+                timeout=5,
+            )
+        except Exception:
+            # broker 不可用时仍标记为已取消；遗留容器由 worker 重启时的孤儿清理回收
+            pass
+
+        self.status = RunStatus.CANCELLED
+        self.end_time = datetime.now()
+        await self.save(session)
 
         return self
 

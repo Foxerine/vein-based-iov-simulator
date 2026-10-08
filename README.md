@@ -82,9 +82,9 @@ runs_base_dir_name_in_project = "runs"
 debug = false
 testing = false
 
-# Celery 配置
-celery_broker_url = "redis://localhost:6379/0"
-celery_result_backend = "redis://localhost:6379/1"
+# Celery 配置（Redis 须设置密码，见下方"安全说明"）
+celery_broker_url = "redis://:<Redis密码>@localhost:6379/0"
+celery_result_backend = "redis://:<Redis密码>@localhost:6379/1"
 
 # 仿真相关配置
 simulation_max_timeout = 14400  # 最大仿真时间 (秒)，默认4小时
@@ -135,6 +135,14 @@ cd ..
 
 请确保 **Docker** 和 **Redis** 服务已经启动。
 
+**安全说明**：用户上传的项目会在仿真容器内编译运行，应视为不可信代码。平台为每次运行创建独立容器，限制 CPU、内存与进程数，禁止提权（`no-new-privileges`）；无头任务的容器不接入任何网络（`container_isolate_network = true`，默认开启）。GUI 任务的容器需要发布 noVNC 端口，仍接入默认网桥，因此 Redis 只应监听本机回环地址并设置密码，例如：
+
+```bash
+docker run -d --name iov-redis -p 127.0.0.1:6379:6379 redis:7 redis-server --requirepass <Redis密码>
+```
+
+公网部署时，noVNC 端口应置于 TLS 反向代理之后。
+
 ### 1. 启动 FastAPI 后端服务
 
 在 **第一个** 终端窗口中，激活主应用虚拟环境并启动。
@@ -156,9 +164,14 @@ fastapi run
 # 激活 Worker 虚拟环境
 source venv_worker/bin/activate
 
-# 启动 Celery Worker
-celery -A worker.worker.celery_app worker --loglevel=info
+# 启动仿真 Worker（池类型与并发数取自 config.cfg 的 worker_pool / max_concurrent_simulations）
+celery -A worker.worker.celery_app worker --loglevel=info -n veins-worker@%h
+
+# 另开一个终端，启动结果分析 Worker（专用进程，只消费 analysis 队列）
+celery -A worker.worker.celery_app worker --loglevel=info -Q analysis --pool=solo -n veins-analysis@%h
 ```
+
+每个仿真容器的资源上限由 `config.cfg` 中的 `container_cpu_limit`、`container_memory_limit`、`container_pids_limit` 控制。
 
 现在，整个后端系统已经准备就绪，可以接收来自前端或API工具的请求了。
 

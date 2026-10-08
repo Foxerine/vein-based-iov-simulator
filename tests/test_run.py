@@ -137,8 +137,9 @@ async def test_get_run_status(client, session, normal_user, normal_user_token, s
         Run.get_status = original_get_status
 
 @pytest.mark.asyncio
+@patch('worker.worker.celery_app.control.broadcast')
 @patch('worker.worker.celery_app.control.revoke')
-async def test_cancel_run(mock_revoke, client, session, normal_user, normal_user_token, setup_run_dirs):
+async def test_cancel_run(mock_revoke, mock_broadcast, client, session, normal_user, normal_user_token, setup_run_dirs):
     """测试取消仿真运行"""
     # 首先创建一个项目
     project_response = client.post(
@@ -173,6 +174,10 @@ async def test_cancel_run(mock_revoke, client, session, normal_user, normal_user
     cancel_data = cancel_response.json()
     assert cancel_data["id"] == run_id
     assert cancel_data["status"] == RunStatus.CANCELLED
+    mock_revoke.assert_called_once_with("task-to-cancel")
+    mock_broadcast.assert_called_once()
+    assert mock_broadcast.call_args.args[0] == "stop_sim_containers"
+    assert mock_broadcast.call_args.kwargs["arguments"] == {"task_id": "task-to-cancel"}
 
 
     # 测试取消已成功完成的任务

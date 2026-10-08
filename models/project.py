@@ -26,7 +26,7 @@ class ProjectBase(SQLModel):
         default="Default",
         min_length=1,
         max_length=100,
-        description="Veins omnetpp.ini中的配置名"
+        description="Configuration name in the Veins omnetpp.ini"
     )
 
 ProjectFileType = list[UploadFile] | UploadFile
@@ -172,7 +172,7 @@ class ProjectUpdateRequest(ProjectBase):
         default=None,
         min_length=1,
         max_length=100,
-        description="Veins omnetpp.ini中的配置名"
+        description="Configuration name in the Veins omnetpp.ini"
     )
 
 class ProjectInfoResponse(ProjectBase):

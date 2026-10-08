@@ -69,6 +69,12 @@ RUN /bin/bash -c ". /root/.nix-profile/etc/profile.d/nix.sh && \
                   opp_env init && \
                   opp_env install veins-5.3"
 
+# 预先完成一次 opp_env 环境求值，把 Nix flake 依赖（nixpkgs 等）与环境派生结果固化进镜像。
+# 否则每个仿真容器启动时都要从 GitHub 下载这些依赖：既拖慢冷启动，也使离线部署无法运行。
+RUN /bin/bash -c ". /root/.nix-profile/etc/profile.d/nix.sh && \
+                  . /opt/venv/bin/activate && \
+                  printf 'exit\n' | opp_env shell veins-5.3"
+
 # 环境变量
 ENV VEINS_BIN="/opp_env_inst/veins-5.3/bin"
 ENV OMNETPP_BIN="/opp_env_inst/omnetpp-6.3.0/bin"

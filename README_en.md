@@ -81,8 +81,8 @@ debug = false
 testing = false
 
 # Celery Configuration
-celery_broker_url = "redis://localhost:6379/0"
-celery_result_backend = "redis://localhost:6379/1"
+celery_broker_url = "redis://:<redis-password>@localhost:6379/0"   # Redis must require a password, see "Security notes"
+celery_result_backend = "redis://:<redis-password>@localhost:6379/1"
 
 # Simulation-related settings
 simulation_max_timeout = 14400  # Max simulation duration in seconds (default: 4 hours)
@@ -133,6 +133,14 @@ cd ..
 
 Ensure that your **Docker** and **Redis** services are running.
 
+**Security notes**: projects uploaded by users are compiled and executed inside the simulation containers and should be treated as untrusted code. The platform creates a separate container for every run with CPU, memory, and process-count limits and with privilege escalation disabled (`no-new-privileges`); containers of headless tasks are attached to no network (`container_isolate_network = true`, the default). Containers of GUI tasks must publish the noVNC port and therefore stay on the default bridge network, so Redis should listen only on the loopback interface and require a password, for example:
+
+```bash
+docker run -d --name iov-redis -p 127.0.0.1:6379:6379 redis:7 redis-server --requirepass <redis-password>
+```
+
+For a public deployment, place the noVNC ports behind a TLS reverse proxy.
+
 ### 1. Start the FastAPI Backend Service
 
 In your **first** terminal window, activate the main application's virtual environment and start the service.
@@ -154,9 +162,14 @@ In a **second** terminal window, activate the worker's virtual environment and s
 # Activate the worker's virtual environment
 source venv_worker/bin/activate
 
-# Start the Celery worker
-celery -A worker.worker.celery_app worker --loglevel=info
+# Start the simulation worker (pool type and concurrency come from worker_pool / max_concurrent_simulations in config.cfg)
+celery -A worker.worker.celery_app worker --loglevel=info -n veins-worker@%h
+
+# In another terminal, start the result-analysis worker (dedicated process, consumes only the analysis queue)
+celery -A worker.worker.celery_app worker --loglevel=info -Q analysis --pool=solo -n veins-analysis@%h
 ```
+
+Per-container resource limits are set by `container_cpu_limit`, `container_memory_limit` and `container_pids_limit` in `config.cfg`.
 
 The entire backend system is now ready and can accept requests from a frontend or an API client.
 
